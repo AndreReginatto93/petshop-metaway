@@ -24,9 +24,9 @@ public class ClienteEntity {
     private String cpf;
     @CreationTimestamp
     private String dataCadastro;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     private Set<EnderecoEntity> enderecos;
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany
     private Set<ContatoEntity> contatos;
     @OneToMany(fetch = FetchType.EAGER)
     private Set<PetEntity> pets;

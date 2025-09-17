@@ -17,8 +17,6 @@ public class PetEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     @ManyToOne
-    private ClienteEntity cliente;
-    @ManyToOne
     private RacaEntity raca;
     private String dataNascimento;
     private String nome;

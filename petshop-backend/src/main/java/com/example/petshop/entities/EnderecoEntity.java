@@ -16,8 +16,6 @@ public class EnderecoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    @ManyToOne
-    private ClienteEntity cliente;
     private String logradouro;
     private String cidade;
     private String bairro;
