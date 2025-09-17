@@ -2,5 +2,5 @@ CREATE TABLE clientes (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     nome TEXT NOT NULL,
     cpf TEXT NOT NULL UNIQUE,
-    dataCadastro TEXT NOT NULL
+    data_cadastro TEXT NOT NULL
 );
