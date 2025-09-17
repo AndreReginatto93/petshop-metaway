@@ -1,5 +1,5 @@
 CREATE TABLE racas (
     id TEXT PRIMARY KEY UNIQUE NOT NULL,
     descricao TEXT NOT NULL UNIQUE,
-    tipo TEXT NOT NULL
+    especie TEXT NOT NULL
 );
