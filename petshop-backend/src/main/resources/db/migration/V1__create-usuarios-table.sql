@@ -1,0 +1,7 @@
+CREATE TABLE usuarios (
+    id TEXT PRIMARY KEY UNIQUE NOT NULL,
+    cpf TEXT NOT NULL UNIQUE,
+    nome TEXT NOT NULL,
+    perfil TEXT NOT NULL,
+    senha TEXT NOT NULL
+);
