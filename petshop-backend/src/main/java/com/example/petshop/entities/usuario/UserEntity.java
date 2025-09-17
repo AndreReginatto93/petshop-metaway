@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -21,8 +20,7 @@ import java.util.UUID;
 @Table(name = "usuarios")
 public class UserEntity implements UserDetails {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private Long id;
     private String cpf;
     private String nome;
     private String password;

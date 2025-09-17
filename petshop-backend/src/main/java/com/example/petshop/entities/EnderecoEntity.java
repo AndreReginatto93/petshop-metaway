@@ -6,8 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 @Data
 @Builder
 @AllArgsConstructor
@@ -16,11 +14,13 @@ import java.util.UUID;
 @Table(name = "enderecos")
 public class EnderecoEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private Long id;
     private String logradouro;
     private String cidade;
     private String bairro;
     private String complemento;
     private String tag;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
+    private ClienteEntity cliente;
 }

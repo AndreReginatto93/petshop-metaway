@@ -1,6 +1,6 @@
 CREATE TABLE enderecos (
-    id UUID PRIMARY KEY UNIQUE NOT NULL,
-    cliente_id UUID NOT NULL,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    cliente_id BIGINT NOT NULL,
     logradouro TEXT NOT NULL,
     cidade TEXT NOT NULL,
     bairro TEXT NOT NULL,

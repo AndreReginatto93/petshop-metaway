@@ -6,7 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -16,11 +16,13 @@ import java.util.UUID;
 @Table(name = "atendimentos")
 public class AtendimentoEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-    @ManyToOne
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "pet_id")
     private PetEntity pet;
+
     private String descricao;
     private String valor;
-    private String data;
+    private LocalDateTime data;
 }

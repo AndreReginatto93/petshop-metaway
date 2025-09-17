@@ -6,7 +6,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
+import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @Builder
@@ -16,10 +18,19 @@ import java.util.UUID;
 @Table(name = "pets")
 public class PetEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-    @ManyToOne
+    private Long id;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "raca_id")
     private RacaEntity raca;
-    private String dataNascimento;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
+    private ClienteEntity cliente;
+
+    private LocalDate dataNascimento;
     private String nome;
+
+    @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY)
+    private Set<AtendimentoEntity> atendimentos = new HashSet<>();
 }

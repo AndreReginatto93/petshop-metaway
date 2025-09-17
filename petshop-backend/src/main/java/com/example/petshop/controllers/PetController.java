@@ -21,7 +21,7 @@ public class PetController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<PetEntity>> getPetById(@PathVariable String id) {
+    public ResponseEntity<Optional<PetEntity>> getPetById(@PathVariable Long id) {
         Optional<PetEntity> pet = petService.getPetById(id);
         if (pet.isEmpty()){
             return ResponseEntity.notFound().build();

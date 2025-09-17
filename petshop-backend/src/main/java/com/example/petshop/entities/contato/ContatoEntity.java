@@ -17,9 +17,9 @@ import java.util.UUID;
 @Table(name = "contatos")
 public class ContatoEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
-    @ManyToOne
+    private Long id;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "cliente_id")
     private ClienteEntity cliente;
     private String tag;
     private ContatoTipo tipo;

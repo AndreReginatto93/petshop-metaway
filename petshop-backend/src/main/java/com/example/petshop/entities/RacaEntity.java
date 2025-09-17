@@ -16,8 +16,7 @@ import java.util.UUID;
 @Table(name = "racas")
 public class RacaEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private Long id;
     private String descricao;
     private String especie;
 }

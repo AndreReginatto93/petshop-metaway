@@ -1,6 +1,6 @@
 CREATE TABLE contatos (
-    id UUID PRIMARY KEY UNIQUE NOT NULL,
-    cliente_id UUID NOT NULL,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    cliente_id BIGINT NOT NULL,
     tag TEXT,
     tipo TEXT NOT NULL,
     valor TEXT NOT NULL,
