@@ -1,7 +1,7 @@
 CREATE TABLE pets (
-    id TEXT PRIMARY KEY UNIQUE NOT NULL,
-    raca_id TEXT NOT NULL,
-    cliente_id TEXT NOT NULL,
+    id UUID PRIMARY KEY UNIQUE NOT NULL,
+    raca_id UUID NOT NULL,
+    cliente_id UUID NOT NULL,
     data_nascimento TEXT NOT NULL,
     nome TEXT NOT NULL,
     FOREIGN KEY (raca_id) REFERENCES racas(id),

@@ -1,6 +1,6 @@
 CREATE TABLE atendimentos (
-    id TEXT PRIMARY KEY UNIQUE NOT NULL,
-    pet_id TEXT NOT NULL,
+    id UUID PRIMARY KEY UNIQUE NOT NULL,
+    pet_id UUID NOT NULL,
     descricao TEXT NOT NULL,
     valor REAL NOT NULL,
     data_atendimento TEXT NOT NULL,

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.Set;
+import java.util.UUID;
 
 @Data
 @Builder
@@ -19,7 +20,7 @@ import java.util.Set;
 public class ClienteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
     private String nome;
     private String cpf;
     @CreationTimestamp

@@ -1,6 +1,6 @@
 CREATE TABLE enderecos (
-    id TEXT PRIMARY KEY UNIQUE NOT NULL,
-    cliente_id TEXT NOT NULL,
+    id UUID PRIMARY KEY UNIQUE NOT NULL,
+    cliente_id UUID NOT NULL,
     logradouro TEXT NOT NULL,
     cidade TEXT NOT NULL,
     bairro TEXT NOT NULL,
