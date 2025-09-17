@@ -29,5 +29,5 @@ public class ClienteEntity {
     @OneToMany(fetch = FetchType.EAGER)
     private Set<ContatoEntity> contatos;
     @OneToMany(fetch = FetchType.EAGER)
-    private Set<PetsEntity> pets;
+    private Set<PetEntity> pets;
 }
