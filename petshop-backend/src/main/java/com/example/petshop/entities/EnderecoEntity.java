@@ -14,13 +14,16 @@ import lombok.NoArgsConstructor;
 @Table(name = "enderecos")
 public class EnderecoEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String logradouro;
     private String cidade;
     private String bairro;
     private String complemento;
     private String tag;
-    @ManyToOne(fetch = FetchType.LAZY)
+
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "cliente_id")
     private ClienteEntity cliente;
 }
