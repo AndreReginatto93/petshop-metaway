@@ -2,6 +2,7 @@ package com.example.petshop.entities;
 
 import com.example.petshop.entities.contato.ContatoEntity;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,12 +31,15 @@ public class ClienteEntity {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime dataCadastro;
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<EnderecoEntity> enderecos = new HashSet<>();
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<ContatoEntity> contatos = new HashSet<>();
 
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @OneToMany(mappedBy = "cliente", fetch = FetchType.LAZY)
     private Set<PetEntity> pets = new HashSet<>();
 }
