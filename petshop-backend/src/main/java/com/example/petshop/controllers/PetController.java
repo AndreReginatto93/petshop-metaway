@@ -1,12 +1,14 @@
 package com.example.petshop.controllers;
 
+import com.example.petshop.dtos.RacaRecordDto;
+import com.example.petshop.dtos.pet.CreatePetRecordDto;
+import com.example.petshop.dtos.pet.UpdatePetRecordDto;
 import com.example.petshop.entities.PetEntity;
+import com.example.petshop.entities.RacaEntity;
 import com.example.petshop.services.PetService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,5 +37,28 @@ public class PetController {
         return ResponseEntity.ok(pets);
     }
 
+    @PostMapping
+    public ResponseEntity<PetEntity> savePet(@RequestBody CreatePetRecordDto petRecordDto){
+        return ResponseEntity.status(HttpStatus.CREATED).body(petService.savePet(petRecordDto));
+    }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<PetEntity> updatePet(
+            @PathVariable Long id,
+            @RequestBody UpdatePetRecordDto petRecordDto) {
+        return petService.updatePet(id, petRecordDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity deletePet(@PathVariable Long id){
+        Optional<PetEntity> pet = petService.getPetById(id);
+        if (pet.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
+        petService.deletePet(id);
+        return ResponseEntity.ok(null);
+    }
 }

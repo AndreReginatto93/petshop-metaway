@@ -1,5 +1,6 @@
 package com.example.petshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,9 +21,10 @@ public class AtendimentoEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "pet_id")
+    @JsonBackReference
     private PetEntity pet;
 
     private String descricao;
     private String valor;
-    private LocalDateTime data;
+    private LocalDateTime dataAtendimento;
 }
