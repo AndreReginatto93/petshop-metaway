@@ -1,6 +1,7 @@
 package com.example.petshop.entities.contato;
 
 import com.example.petshop.entities.ClienteEntity;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -22,8 +23,9 @@ public class ContatoEntity {
     private Long id;
 
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cliente_id")
+    @JsonBackReference
     private ClienteEntity cliente;
 
     private String tag;
