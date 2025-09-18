@@ -1,5 +1,6 @@
 package com.example.petshop.entities;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,7 +8,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -18,6 +21,7 @@ import java.util.Set;
 @Table(name = "pets")
 public class PetEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -31,6 +35,7 @@ public class PetEntity {
     private LocalDate dataNascimento;
     private String nome;
 
-    @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY)
-    private Set<AtendimentoEntity> atendimentos = new HashSet<>();
+    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @JsonManagedReference
+    private List<AtendimentoEntity> atendimentos = new ArrayList<>();
 }
