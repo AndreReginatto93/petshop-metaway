@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -38,17 +39,59 @@ public class PetController {
     }
 
     @PostMapping
-    public ResponseEntity<PetEntity> savePet(@RequestBody CreatePetRecordDto petRecordDto){
-        return ResponseEntity.status(HttpStatus.CREATED).body(petService.savePet(petRecordDto));
+    public ResponseEntity savePet(@RequestBody CreatePetRecordDto petRecordDto){
+        try{
+            return ResponseEntity.status(HttpStatus.CREATED).body(petService.savePet(petRecordDto));
+        } catch (IllegalArgumentException e) {
+            if (e.getMessage().contains("Raca not found")) {
+                Map<String, String> errorBody = Map.of(
+                        "error", "Unprocessable Entity",
+                        "message", "Raçaa informada não existe"
+                );
+                return ResponseEntity.unprocessableEntity().body(errorBody);
+            }
+            if (e.getMessage().contains("Cliente not found")) {
+                Map<String, String> errorBody = Map.of(
+                        "error", "Unprocessable Entity",
+                        "message", "Cliente informado não existe"
+                );
+                return ResponseEntity.unprocessableEntity().body(errorBody);
+            }
+
+            // fallback para outros IllegalArgumentException
+            Map<String, String> errorBody = Map.of(
+                    "error", "Bad Request",
+                    "message", e.getMessage()
+            );
+            return ResponseEntity.badRequest().body(errorBody);
+        }
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<PetEntity> updatePet(
+    public ResponseEntity updatePet(
             @PathVariable Long id,
             @RequestBody UpdatePetRecordDto petRecordDto) {
-        return petService.updatePet(id, petRecordDto)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        try {
+
+            return petService.updatePet(id, petRecordDto)
+                    .map(ResponseEntity::ok)
+                    .orElse(ResponseEntity.notFound().build());
+        } catch (IllegalArgumentException e) {
+        if (e.getMessage().contains("Raca not found")) {
+            Map<String, String> errorBody = Map.of(
+                    "error", "Unprocessable Entity",
+                    "message", "Raça informada não existe"
+            );
+            return ResponseEntity.unprocessableEntity().body(errorBody);
+        }
+
+        // fallback para outros IllegalArgumentException
+        Map<String, String> errorBody = Map.of(
+                "error", "Bad Request",
+                "message", e.getMessage()
+        );
+        return ResponseEntity.badRequest().body(errorBody);
+    }
     }
 
     @DeleteMapping("/{id}")

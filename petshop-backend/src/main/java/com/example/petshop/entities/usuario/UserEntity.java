@@ -25,11 +25,11 @@ public class UserEntity implements UserDetails {
     private String login;//CPF
     private String nome;
     private String password;
-    private UserRole perfil;
+    private UserRole role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.perfil == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ADMIN"));
+        if(this.role == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ADMIN"));
         else return List.of(new SimpleGrantedAuthority("USER"));
     }
 

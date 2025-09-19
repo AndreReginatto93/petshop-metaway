@@ -30,7 +30,7 @@ public class UsuarioService implements UserDetailsService {
                 .login(registerRecordDto.login())
                 .nome(registerRecordDto.nome())
                 .password(encryptedPassword)
-                .perfil(registerRecordDto.role())
+                .role(registerRecordDto.role())
                 .build();
         return usuarioRepository.save(newUser);
     }

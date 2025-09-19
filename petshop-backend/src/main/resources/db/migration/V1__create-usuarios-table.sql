@@ -2,6 +2,6 @@ CREATE TABLE usuarios (
     id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
     login TEXT NOT NULL UNIQUE,
     nome TEXT NOT NULL,
-    perfil TEXT NOT NULL,
+    role TEXT NOT NULL,
     password TEXT NOT NULL
 );
