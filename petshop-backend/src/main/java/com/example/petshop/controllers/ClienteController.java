@@ -21,11 +21,9 @@ public class ClienteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ClienteEntity>> getClienteById(@PathVariable Long id) {
-        Optional<ClienteEntity> cliente = clienteService.getClienteById(id);
-        if (cliente.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<ClienteEntity> getClienteById(@PathVariable Long id) {
+        ClienteEntity cliente = clienteService.getClienteById(id);
+
         return ResponseEntity.ok(cliente);
     }
 
