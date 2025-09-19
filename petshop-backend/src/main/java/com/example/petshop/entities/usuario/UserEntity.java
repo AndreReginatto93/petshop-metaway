@@ -20,16 +20,17 @@ import java.util.List;
 @Table(name = "usuarios")
 public class UserEntity implements UserDetails {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String cpf;
+    private String login;//CPF
     private String nome;
     private String password;
     private UserRole perfil;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        if(this.perfil == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"), new SimpleGrantedAuthority("ROLE_USER"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        if(this.perfil == UserRole.ADMIN) return List.of(new SimpleGrantedAuthority("ADMIN"));
+        else return List.of(new SimpleGrantedAuthority("USER"));
     }
 
     @Override

@@ -6,6 +6,8 @@ import com.example.petshop.entities.AtendimentoEntity;
 import com.example.petshop.entities.PetEntity;
 import com.example.petshop.repositories.AtendimentoRepository;
 import com.example.petshop.repositories.PetRepository;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,14 +18,16 @@ import java.util.Optional;
 public class AtendimentoService {
     private final AtendimentoRepository atendimentoRepository;
     private final PetRepository petRepository;
-
+    
     public AtendimentoService(AtendimentoRepository atendimentoRepository, PetRepository petRepository) {
         this.atendimentoRepository = atendimentoRepository;
         this.petRepository = petRepository;
+
     }
 
     public Optional<AtendimentoEntity> getAtendimentoById(Long id) {
         return atendimentoRepository.findById(id);
+
     }
     public List<AtendimentoEntity> getAllAtendimentos() {
         return atendimentoRepository.findAll();
