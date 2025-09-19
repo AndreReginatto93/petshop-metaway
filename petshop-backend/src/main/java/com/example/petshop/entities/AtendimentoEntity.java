@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,6 +18,7 @@ import java.time.LocalDateTime;
 @Table(name = "atendimentos")
 public class AtendimentoEntity {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -25,6 +27,6 @@ public class AtendimentoEntity {
     private PetEntity pet;
 
     private String descricao;
-    private String valor;
+    private BigDecimal valor;
     private LocalDateTime dataAtendimento;
 }
