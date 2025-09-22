@@ -3,9 +3,12 @@ package com.example.petshop.controllers;
 import com.example.petshop.dtos.endereco.CreateEnderecoRecordDto;
 import com.example.petshop.dtos.endereco.UpdateEnderecoRecordDto;
 import com.example.petshop.entities.EnderecoEntity;
+import com.example.petshop.entities.contato.ContatoEntity;
 import com.example.petshop.services.EnderecoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +20,12 @@ public class EnderecoController {
 
     public EnderecoController(EnderecoService enderecoService) {
         this.enderecoService = enderecoService;
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<List<EnderecoEntity>> getOwnEnderecos(@AuthenticationPrincipal UserDetails userDetails) {
+        List<EnderecoEntity> enderecos = enderecoService.findByClienteLogin(userDetails.getUsername());
+        return ResponseEntity.ok(enderecos);
     }
 
     @GetMapping("/{id}")
@@ -42,6 +51,16 @@ public class EnderecoController {
             @PathVariable Long id,
             @RequestBody UpdateEnderecoRecordDto updateEnderecoRecordDto) {
         return enderecoService.updateEndereco(id, updateEnderecoRecordDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/me/{id}")
+    public ResponseEntity<EnderecoEntity> updateEnderecoByLogin(
+            @PathVariable Long id,
+            @RequestBody UpdateEnderecoRecordDto updateEnderecoRecordDto,
+            @AuthenticationPrincipal UserDetails userDetails) {
+        return enderecoService.updateEnderecoByLogin(id, updateEnderecoRecordDto, userDetails.getUsername())
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
