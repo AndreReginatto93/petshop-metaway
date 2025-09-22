@@ -23,6 +23,11 @@ public class ContatoService {
         this.clienteRepository = clienteRepository;
     }
 
+
+    public List<ContatoEntity> findByClienteLogin(String login) {
+        return contatoRepository.findByClienteLogin(login);
+    }
+
     public ContatoEntity getContatoById(Long id) {
         Optional<ContatoEntity> contatoEntity = contatoRepository.findById(id);
 
@@ -61,6 +66,25 @@ public class ContatoService {
                     existingContato.setTag(updateContatoRecordDto.tag());
                     return contatoRepository.saveAndFlush(existingContato);
                 });
+    }
+
+    @Transactional
+    public Optional<ContatoEntity> updateContatoByLogin(Long id, UpdateContatoRecordDto updateContatoRecordDto, String login) {
+        ClienteEntity clienteEntity = clienteRepository.findByCpf(login)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com cpf: " + login));
+
+        clienteEntity.getContatos().stream().filter(contato -> contato.getId().equals(id)).findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Contato não encontrado com id: " + id + " para o cliente com cpf: " + login));
+
+        Optional<ContatoEntity> contato = contatoRepository.findById(id)
+                .map(existingContato -> {
+                    existingContato.setTipo(updateContatoRecordDto.tipo());
+                    existingContato.setValor(updateContatoRecordDto.valor());
+                    existingContato.setTag(updateContatoRecordDto.tag());
+                    return contatoRepository.saveAndFlush(existingContato);
+                });
+
+        return contato;
     }
 
     @Transactional

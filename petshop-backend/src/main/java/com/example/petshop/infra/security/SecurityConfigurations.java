@@ -32,13 +32,13 @@ public class SecurityConfigurations {
                 .requestMatchers(HttpMethod.PUT, "/api/v1/clientes/me").authenticated()
 
                 .requestMatchers(HttpMethod.GET, "/api/v1/pets/me").authenticated()
-                .requestMatchers(HttpMethod.PUT, "/api/v1/pets/me").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/v1/pets/me/**").authenticated()
 
                 .requestMatchers(HttpMethod.GET, "/api/v1/contatos/me").authenticated()
-                .requestMatchers(HttpMethod.PUT, "/api/v1/contatos/me").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/v1/contatos/me/**").authenticated()
 
                 .requestMatchers(HttpMethod.GET, "/api/v1/enderecos/me").authenticated()
-                .requestMatchers(HttpMethod.PUT, "/api/v1/enderecos/me").authenticated()
+                .requestMatchers(HttpMethod.PUT, "/api/v1/enderecos/me/**").authenticated()
                 .anyRequest().hasAuthority("ROLE_ADMIN")
         )
         .csrf(csrf -> csrf.disable())
