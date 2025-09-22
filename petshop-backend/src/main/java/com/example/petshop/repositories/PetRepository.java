@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface PetRepository extends JpaRepository<PetEntity, Long> {
     @Query(value = """
-        SELECT p.id, p.raca_id, p.cliente_id, p.data_nascimento, p.nome
+         SELECT p.id, p.raca_id, p.cliente_id, p.data_nascimento, p.nome
          FROM pets p
          join clientes cl on cl.id = p.cliente_id
          WHERE cl.cpf = :login

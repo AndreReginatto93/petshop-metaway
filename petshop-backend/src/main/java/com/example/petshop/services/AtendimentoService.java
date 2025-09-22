@@ -6,8 +6,12 @@ import com.example.petshop.entities.AtendimentoEntity;
 import com.example.petshop.entities.ClienteEntity;
 import com.example.petshop.entities.PetEntity;
 import com.example.petshop.repositories.AtendimentoRepository;
+import com.example.petshop.repositories.ClienteRepository;
 import com.example.petshop.repositories.PetRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,11 +22,31 @@ import java.util.Optional;
 public class AtendimentoService {
     private final AtendimentoRepository atendimentoRepository;
     private final PetRepository petRepository;
+    private final ClienteRepository clienteRepository;
     
-    public AtendimentoService(AtendimentoRepository atendimentoRepository, PetRepository petRepository) {
+    public AtendimentoService(AtendimentoRepository atendimentoRepository, PetRepository petRepository, ClienteRepository clienteRepository) {
         this.atendimentoRepository = atendimentoRepository;
         this.petRepository = petRepository;
+        this.clienteRepository = clienteRepository;
 
+    }
+
+    public List<AtendimentoEntity> findByClienteLogin(String login) {
+        return atendimentoRepository.findByClienteLogin(login);
+    }
+
+    public List<AtendimentoEntity> findByPet(Long petId, UserDetails userDetails) {
+        if (userDetails.getAuthorities().contains(new SimpleGrantedAuthority("ROLE_ADMIN"))){
+            return atendimentoRepository.findByPet(petId);
+        }
+
+        ClienteEntity clienteEntity = clienteRepository.findByCpf(userDetails.getUsername())
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com cpf: " + userDetails.getUsername()));
+
+        clienteEntity.getPets().stream().filter(pet -> pet.getId().equals(petId)).findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Pet não encontrado com id: " + petId + " para o cliente com cpf: " + userDetails.getUsername()));
+
+        return atendimentoRepository.findByPet(petId);
     }
 
     public AtendimentoEntity getAtendimentoById(Long id) {

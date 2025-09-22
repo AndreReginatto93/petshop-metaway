@@ -6,11 +6,11 @@ import com.example.petshop.entities.AtendimentoEntity;
 import com.example.petshop.services.AtendimentoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/atendimentos")
@@ -19,6 +19,19 @@ public class AtendimentoController {
 
     public AtendimentoController(AtendimentoService atendimentoService) {
         this.atendimentoService = atendimentoService;
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<List<AtendimentoEntity>> getAllAtendimentosByLogin(@AuthenticationPrincipal UserDetails userDetails) {
+        List<AtendimentoEntity> atendimentos = atendimentoService.findByClienteLogin(userDetails.getUsername());
+        return ResponseEntity.ok(atendimentos);
+    }
+
+    @GetMapping("/pet/{petId}")
+    public ResponseEntity<List<AtendimentoEntity>> getAllAtendimentosByPet(@PathVariable Long petId,
+                                                                           @AuthenticationPrincipal UserDetails userDetails) {
+        List<AtendimentoEntity> atendimentos = atendimentoService.findByPet(petId, userDetails);
+        return ResponseEntity.ok(atendimentos);
     }
 
     @GetMapping("/{id}")
