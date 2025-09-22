@@ -101,13 +101,13 @@ class ClienteControllerTest {
         }
 
         @Test
-        void getAllClientesUserForbidden() throws Exception {
+        void getAllClientes() throws Exception {
             mockMvc.perform(get("/api/v1/clientes")).andDo(print()).andExpect(status().isForbidden());
         }
 
         @Test
-        void getAllClienteById() throws Exception {
-            mockMvc.perform(get("/api/v1/clientes")).andDo(print()).andExpect(status().isForbidden());
+        void getClienteById() throws Exception {
+            mockMvc.perform(get("/api/v1/clientes/1")).andDo(print()).andExpect(status().isForbidden());
         }
 
         @Test
@@ -138,19 +138,19 @@ class ClienteControllerTest {
     @WithMockUser(roles = {"ADMIN"})
     class AdminTests {
         @Test
-        void getOwnClienteAdminAuthorized() throws Exception {
+        void getOwnCliente() throws Exception {
             mockMvc.perform(get("/api/v1/clientes/me")).andDo(print()).andExpect(status().isOk());
         }
 
         @Test
-        void getAllClientesAuthorized() throws Exception {
+        void getAllClientes() throws Exception {
             mockMvc.perform(get("/api/v1/clientes")).andDo(print()).andExpect(status().isOk())
                     .andExpect(content().string(containsString("[]")));
         }
 
         @Test
-        void getAllClienteById() throws Exception {
-            mockMvc.perform(get("/api/v1/clientes")).andDo(print()).andExpect(status().isOk());
+        void getClienteById() throws Exception {
+            mockMvc.perform(get("/api/v1/clientes/1")).andDo(print()).andExpect(status().isOk());
         }
 
         @Test
