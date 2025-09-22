@@ -6,10 +6,11 @@ import com.example.petshop.entities.ClienteEntity;
 import com.example.petshop.services.ClienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/clientes")
@@ -18,6 +19,13 @@ public class ClienteController {
 
     public ClienteController(ClienteService clienteService) {
         this.clienteService = clienteService;
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<ClienteEntity> getOwnCliente(@AuthenticationPrincipal UserDetails userDetails) {
+        ClienteEntity cliente = clienteService.findByCpf(userDetails.getUsername());
+
+        return ResponseEntity.ok(cliente);
     }
 
     @GetMapping("/{id}")
@@ -45,6 +53,12 @@ public class ClienteController {
         return clienteService.updateCliente(id, updateClienteRecordDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/me")
+    public ResponseEntity<ClienteEntity> updateOwnCliente(@AuthenticationPrincipal UserDetails userDetails,
+                                                          @RequestBody UpdateClienteRecordDto updateClienteRecordDto) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.updateClienteByCpf(userDetails.getUsername(), updateClienteRecordDto));
     }
 
     @DeleteMapping("/{id}")

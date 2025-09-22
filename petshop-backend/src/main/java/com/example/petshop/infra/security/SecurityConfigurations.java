@@ -29,19 +29,17 @@ public class SecurityConfigurations {
                 .authorizeHttpRequests(authorize -> authorize
                         //authentication endpoints
                         .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
-                        .requestMatchers(HttpMethod.POST, "/api/v1/auth/register").hasAuthority("ROLE_ADMIN")
 
-                        //ADMIN ENDPOINTS (POST and DELETE)
-                        .requestMatchers(HttpMethod.POST, "/api/v1/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.DELETE, "/api/v1/**").hasAuthority("ROLE_ADMIN")
-                        .requestMatchers(HttpMethod.GET, "/api/v1/clientes").hasAuthority("ROLE_ADMIN")
-
-                        //USER ENDPOINTS (GET and PUT)
-                        .requestMatchers(HttpMethod.GET, "/api/v1/**").authenticated()
-                        .requestMatchers(HttpMethod.PUT, "/api/v1/**").authenticated()
+                        //usuarios podem ver seus proprios dados e os dados dos seus pets
+                        .requestMatchers(HttpMethod.GET, "/api/v1/clientes/me").authenticated()
+                        .requestMatchers(HttpMethod.PUT, "/api/v1/clientes/me").authenticated()
+//                        .requestMatchers(HttpMethod.GET, "/api/v1/pets/*").authenticated()
+//                        .requestMatchers(HttpMethod.PUT, "/api/v1/pets/*").authenticated()
 
 
-                        .anyRequest().denyAll()
+
+
+                        .anyRequest().hasAuthority("ROLE_ADMIN")
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
