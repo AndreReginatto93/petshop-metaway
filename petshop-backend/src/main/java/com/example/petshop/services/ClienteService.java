@@ -67,7 +67,6 @@ public class ClienteService {
         return clienteRepository.findById(id)
                 .map(existingCliente -> {
                     // Verifica se o usuário autenticado é o dono do recurso ou um ADMIN
-                    // Verifica se o usuário autenticado é o dono do recurso ou um ADMIN
                     boolean isOwner = authService.getAuthenticatedUsername().equals(existingCliente.getCpf());
                     boolean isAdmin = authService.getAuthenticatedUser().getAuthorities().stream()
                             .anyMatch(a -> a.getAuthority().equals("ROLE_ADMIN"));
