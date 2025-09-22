@@ -39,6 +39,7 @@ public class SecurityConfigurations {
 
                 .requestMatchers(HttpMethod.GET, "/api/v1/enderecos/me").authenticated()
                 .requestMatchers(HttpMethod.PUT, "/api/v1/enderecos/me/**").authenticated()
+
                 .anyRequest().hasAuthority("ROLE_ADMIN")
         )
         .csrf(csrf -> csrf.disable())

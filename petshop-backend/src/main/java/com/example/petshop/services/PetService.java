@@ -27,6 +27,10 @@ public class PetService {
         this.clienteRepository = clienteRepository;
     }
 
+    public List<PetEntity> findByClienteLogin(String login) {
+        return petRepository.findByClienteLogin(login);
+    }
+
     public PetEntity getPetById(Long id) {
         Optional<PetEntity> petEntity = petRepository.findById(id);
 
@@ -69,6 +73,26 @@ public class PetService {
                     existingPet.setDataNascimento(updatePetRecordDto.dataNascimento());
                     existingPet.setRaca(racaEntity);
 
+                    return petRepository.saveAndFlush(existingPet);
+                });
+    }
+
+    @Transactional
+    public Optional<PetEntity> updateContatoByLogin(Long id, UpdatePetRecordDto updatePetRecordDto, String login) {
+        ClienteEntity clienteEntity = clienteRepository.findByCpf(login)
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com cpf: " + login));
+
+        clienteEntity.getPets().stream().filter(pet -> pet.getId().equals(id)).findFirst()
+                .orElseThrow(() -> new EntityNotFoundException("Pet não encontrado com id: " + id + " para o cliente com cpf: " + login));
+
+        RacaEntity racaEntity = racaRepository.findById(updatePetRecordDto.racaId())
+                .orElseThrow(() -> new EntityNotFoundException("Raça não encontrado com id: " + updatePetRecordDto.racaId()));
+
+        return petRepository.findById(id)
+                .map(existingPet -> {
+                    existingPet.setNome(updatePetRecordDto.nome());
+                    existingPet.setDataNascimento(updatePetRecordDto.dataNascimento());
+                    existingPet.setRaca(racaEntity);
                     return petRepository.saveAndFlush(existingPet);
                 });
     }
