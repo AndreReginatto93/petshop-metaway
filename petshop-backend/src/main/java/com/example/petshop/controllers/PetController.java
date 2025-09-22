@@ -24,11 +24,8 @@ public class PetController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<PetEntity>> getPetById(@PathVariable Long id) {
-        Optional<PetEntity> pet = petService.getPetById(id);
-        if (pet.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<PetEntity> getPetById(@PathVariable Long id) {
+        PetEntity pet = petService.getPetById(id);
         return ResponseEntity.ok(pet);
     }
 
@@ -40,67 +37,19 @@ public class PetController {
 
     @PostMapping
     public ResponseEntity savePet(@RequestBody CreatePetRecordDto petRecordDto){
-        try{
-            return ResponseEntity.status(HttpStatus.CREATED).body(petService.savePet(petRecordDto));
-        } catch (IllegalArgumentException e) {
-            if (e.getMessage().contains("Raca not found")) {
-                Map<String, String> errorBody = Map.of(
-                        "error", "Unprocessable Entity",
-                        "message", "Raçaa informada não existe"
-                );
-                return ResponseEntity.unprocessableEntity().body(errorBody);
-            }
-            if (e.getMessage().contains("Cliente not found")) {
-                Map<String, String> errorBody = Map.of(
-                        "error", "Unprocessable Entity",
-                        "message", "Cliente informado não existe"
-                );
-                return ResponseEntity.unprocessableEntity().body(errorBody);
-            }
-
-            // fallback para outros IllegalArgumentException
-            Map<String, String> errorBody = Map.of(
-                    "error", "Bad Request",
-                    "message", e.getMessage()
-            );
-            return ResponseEntity.badRequest().body(errorBody);
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(petService.savePet(petRecordDto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updatePet(
-            @PathVariable Long id,
-            @RequestBody UpdatePetRecordDto petRecordDto) {
-        try {
-
-            return petService.updatePet(id, petRecordDto)
-                    .map(ResponseEntity::ok)
-                    .orElse(ResponseEntity.notFound().build());
-        } catch (IllegalArgumentException e) {
-        if (e.getMessage().contains("Raca not found")) {
-            Map<String, String> errorBody = Map.of(
-                    "error", "Unprocessable Entity",
-                    "message", "Raça informada não existe"
-            );
-            return ResponseEntity.unprocessableEntity().body(errorBody);
-        }
-
-        // fallback para outros IllegalArgumentException
-        Map<String, String> errorBody = Map.of(
-                "error", "Bad Request",
-                "message", e.getMessage()
-        );
-        return ResponseEntity.badRequest().body(errorBody);
-    }
+    public ResponseEntity updatePet(@PathVariable Long id,
+                                    @RequestBody UpdatePetRecordDto petRecordDto) {
+        return petService.updatePet(id, petRecordDto)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deletePet(@PathVariable Long id){
-        Optional<PetEntity> pet = petService.getPetById(id);
-        if (pet.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-
         petService.deletePet(id);
         return ResponseEntity.ok(null);
     }

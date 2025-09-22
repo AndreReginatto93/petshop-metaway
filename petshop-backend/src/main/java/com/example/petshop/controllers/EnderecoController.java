@@ -9,8 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/enderecos")
@@ -22,11 +20,9 @@ public class EnderecoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<EnderecoEntity>> getEnderecoById(@PathVariable Long id) {
-        Optional<EnderecoEntity> endereco = enderecoService.getEnderecoById(id);
-        if (endereco.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<EnderecoEntity> getEnderecoById(@PathVariable Long id) {
+        EnderecoEntity endereco = enderecoService.getEnderecoById(id);
+
         return ResponseEntity.ok(endereco);
     }
 
@@ -38,24 +34,7 @@ public class EnderecoController {
 
     @PostMapping
     public ResponseEntity saveEndereco(@RequestBody CreateEnderecoRecordDto createEnderecoRecordDto) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.saveEndereco(createEnderecoRecordDto));
-        } catch (IllegalArgumentException e) {
-            if (e.getMessage().contains("Cliente not found")) {
-                Map<String, String> errorBody = Map.of(
-                        "error", "Unprocessable Entity",
-                        "message", "Cliente informado não existe"
-                );
-                return ResponseEntity.unprocessableEntity().body(errorBody);
-            }
-
-            // fallback para outros IllegalArgumentException
-            Map<String, String> errorBody = Map.of(
-                    "error", "Bad Request",
-                    "message", e.getMessage()
-            );
-            return ResponseEntity.badRequest().body(errorBody);
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.saveEndereco(createEnderecoRecordDto));
     }
 
     @PutMapping("/{id}")
@@ -69,11 +48,6 @@ public class EnderecoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteEndereco(@PathVariable Long id){
-        Optional<EnderecoEntity> endereco = enderecoService.getEnderecoById(id);
-        if (endereco.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-
         enderecoService.deleteEndereco(id);
         return ResponseEntity.ok(null);
     }

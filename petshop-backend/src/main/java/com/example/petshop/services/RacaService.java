@@ -1,8 +1,10 @@
 package com.example.petshop.services;
 
 import com.example.petshop.dtos.RacaRecordDto;
+import com.example.petshop.entities.ClienteEntity;
 import com.example.petshop.entities.RacaEntity;
 import com.example.petshop.repositories.RacaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,8 +19,14 @@ public class RacaService {
         this.racaRepository = racaRepository;
     }
 
-    public Optional<RacaEntity> getRacaById(Long id) {
-        return racaRepository.findById(id);
+    public RacaEntity getRacaById(Long id) {
+        Optional<RacaEntity> racaEntity = racaRepository.findById(id);
+
+        if (racaEntity.isEmpty()) {
+            throw new EntityNotFoundException("Raça não encontrado com id: " + id);
+        }
+
+        return racaEntity.get();
     }
 
     public List<RacaEntity> getAllRacas() {

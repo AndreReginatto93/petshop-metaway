@@ -3,11 +3,11 @@ package com.example.petshop.services;
 import com.example.petshop.dtos.atendimento.CreateAtendimentoRecordDto;
 import com.example.petshop.dtos.atendimento.UpdateAtendimentoRecordDto;
 import com.example.petshop.entities.AtendimentoEntity;
+import com.example.petshop.entities.ClienteEntity;
 import com.example.petshop.entities.PetEntity;
 import com.example.petshop.repositories.AtendimentoRepository;
 import com.example.petshop.repositories.PetRepository;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,8 +25,14 @@ public class AtendimentoService {
 
     }
 
-    public Optional<AtendimentoEntity> getAtendimentoById(Long id) {
-        return atendimentoRepository.findById(id);
+    public AtendimentoEntity getAtendimentoById(Long id) {
+        Optional<AtendimentoEntity> atendimentoEntity = atendimentoRepository.findById(id);
+
+        if (atendimentoEntity.isEmpty()) {
+            throw new EntityNotFoundException("Atendimento não encontrado com id: " + id);
+        }
+
+        return atendimentoEntity.get();
 
     }
     public List<AtendimentoEntity> getAllAtendimentos() {
@@ -36,7 +42,7 @@ public class AtendimentoService {
     @Transactional
     public AtendimentoEntity saveAtendimento(CreateAtendimentoRecordDto createAtendimentoRecordDto){
         PetEntity petEntity = petRepository.findById(createAtendimentoRecordDto.petId())
-                .orElseThrow(() -> new IllegalArgumentException("Pet not found with id: " + createAtendimentoRecordDto.petId()));
+                .orElseThrow(() -> new EntityNotFoundException("Pet não encontrado com id: " + createAtendimentoRecordDto.petId()));
 
         AtendimentoEntity atendimentoEntity = AtendimentoEntity.builder()
                 .dataAtendimento(createAtendimentoRecordDto.dataAtendimento())

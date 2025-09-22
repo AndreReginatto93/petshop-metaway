@@ -22,11 +22,9 @@ public class ContatoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ContatoEntity>> getContatoById(@PathVariable Long id) {
-        Optional<ContatoEntity> contato = contatoService.getContatoById(id);
-        if (contato.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<ContatoEntity> getContatoById(@PathVariable Long id) {
+        ContatoEntity contato = contatoService.getContatoById(id);
+
         return ResponseEntity.ok(contato);
     }
 
@@ -38,24 +36,7 @@ public class ContatoController {
 
     @PostMapping
     public ResponseEntity saveContato(@RequestBody CreateContatoRecordDto createContatoRecordDto) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(contatoService.saveContato(createContatoRecordDto));
-        } catch (IllegalArgumentException e) {
-            if (e.getMessage().contains("Cliente not found")) {
-                Map<String, String> errorBody = Map.of(
-                        "error", "Unprocessable Entity",
-                        "message", "Cliente informado não existe"
-                );
-                return ResponseEntity.unprocessableEntity().body(errorBody);
-            }
-
-            // fallback para outros IllegalArgumentException
-            Map<String, String> errorBody = Map.of(
-                    "error", "Bad Request",
-                    "message", e.getMessage()
-            );
-            return ResponseEntity.badRequest().body(errorBody);
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(contatoService.saveContato(createContatoRecordDto));
     }
 
     @PutMapping("/{id}")
@@ -69,29 +50,7 @@ public class ContatoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteContato(@PathVariable Long id){
-        Optional<ContatoEntity> contato = contatoService.getContatoById(id);
-        if (contato.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-
         contatoService.deleteContato(id);
         return ResponseEntity.ok(null);
-    }
-
-
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Map<String, String>> handleHttpMessageNotReadable(HttpMessageNotReadableException e) {
-        if (e.getMessage().contains("ContatoTipo")) {
-            Map<String, String> errorBody = Map.of(
-                    "error", "Unprocessable Entity",
-                    "message", "tipo deve ser: "+Arrays.toString(ContatoTipo.values())
-            );
-            return ResponseEntity.unprocessableEntity().body(errorBody);
-        }
-        Map<String, String> errorBody = Map.of(
-                "error", "Bad Request",
-                "message", "Erro de leitura do corpo da requisição. Verifique os campos enviados."
-        );
-        return ResponseEntity.badRequest().body(errorBody);
     }
 }

@@ -23,18 +23,17 @@ public class ClienteService {
         Optional<ClienteEntity> clienteEntity = clienteRepository.findByCpf(cpf);
 
         if (clienteEntity.isEmpty()) {
-            throw new EntityNotFoundException("Cliente não encontrado");
+            throw new EntityNotFoundException("Cliente não encontrado com cpf: " + cpf);
         }
 
         return clienteEntity.get();
     }
 
     public ClienteEntity getClienteById(Long id) {
-
         Optional<ClienteEntity> clienteEntity = clienteRepository.findById(id);
 
         if (clienteEntity.isEmpty()) {
-            throw new EntityNotFoundException("Cliente não encontrado");
+            throw new EntityNotFoundException("Cliente não encontrado com id: " + id);
         }
 
         return clienteEntity.get();
@@ -69,7 +68,7 @@ public class ClienteService {
         Optional<ClienteEntity> existingCliente =  clienteRepository.findByCpf(cpf);
 
         if (existingCliente.isEmpty()){
-            throw new EntityNotFoundException("Cliente não encontrado");
+            throw new EntityNotFoundException("Cliente não encontrado com cpf: " + cpf);
         }
 
         ClienteEntity cliente = existingCliente.get();

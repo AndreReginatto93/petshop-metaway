@@ -20,11 +20,8 @@ public class RacaController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<RacaEntity>> getRacaById(@PathVariable Long id) {
-        Optional<RacaEntity> raca = racaService.getRacaById(id);
-        if (raca.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<RacaEntity> getRacaById(@PathVariable Long id) {
+        RacaEntity raca = racaService.getRacaById(id);
         return ResponseEntity.ok(raca);
     }
 
@@ -50,11 +47,6 @@ public class RacaController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteRaca(@PathVariable Long id){
-        Optional<RacaEntity> raca = racaService.getRacaById(id);
-        if (raca.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-
         racaService.deleteRaca(id);
         return ResponseEntity.ok(null);
     }

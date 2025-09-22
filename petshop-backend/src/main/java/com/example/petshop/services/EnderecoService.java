@@ -7,6 +7,7 @@ import com.example.petshop.entities.ClienteEntity;
 import com.example.petshop.entities.EnderecoEntity;
 import com.example.petshop.repositories.ClienteRepository;
 import com.example.petshop.repositories.EnderecoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,8 +24,14 @@ public class EnderecoService {
         this.clienteRepository = clienteRepository;
     }
 
-    public Optional<EnderecoEntity> getEnderecoById(Long id) {
-        return enderecoRepository.findById(id);
+    public EnderecoEntity getEnderecoById(Long id) {
+        Optional<EnderecoEntity> enderecoEntity = enderecoRepository.findById(id);
+
+        if (enderecoEntity.isEmpty()) {
+            throw new EntityNotFoundException("Endereço não encontrado com id: " + id);
+        }
+
+        return enderecoEntity.get();
     }
 
     public List<EnderecoEntity> getAllEnderecos() {
@@ -34,7 +41,7 @@ public class EnderecoService {
     @Transactional
     public EnderecoEntity saveEndereco(CreateEnderecoRecordDto createEnderecoRecordDto){
         ClienteEntity clienteEntity = clienteRepository.findById(createEnderecoRecordDto.clienteId())
-                .orElseThrow(() -> new IllegalArgumentException("Cliente not found with id: " + createEnderecoRecordDto.clienteId()));
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com id: " + createEnderecoRecordDto.clienteId()));
 
         EnderecoEntity enderecoEntity = EnderecoEntity.builder()
                 .cliente(clienteEntity)

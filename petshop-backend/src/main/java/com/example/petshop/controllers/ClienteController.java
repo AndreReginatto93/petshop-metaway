@@ -58,14 +58,11 @@ public class ClienteController {
     @PutMapping("/me")
     public ResponseEntity<ClienteEntity> updateOwnCliente(@AuthenticationPrincipal UserDetails userDetails,
                                                           @RequestBody UpdateClienteRecordDto updateClienteRecordDto) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.updateClienteByCpf(userDetails.getUsername(), updateClienteRecordDto));
+        return ResponseEntity.status(HttpStatus.OK).body(clienteService.updateClienteByCpf(userDetails.getUsername(), updateClienteRecordDto));
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteCliente(@PathVariable Long id){
-        // Verifica se o cliente existe
-        ClienteEntity cliente = clienteService.getClienteById(id);
-
         clienteService.deleteCliente(id);
         return ResponseEntity.ok(null);
     }

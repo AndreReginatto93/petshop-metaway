@@ -47,23 +47,6 @@ public class AutenticacaoController {
 
     @PostMapping("/register")
     public ResponseEntity register(@RequestBody @Valid RegisterRecordDto registerRecordDto){
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.saveUser(registerRecordDto));
-        } catch (IllegalArgumentException e) {
-            if (e.getMessage().contains("Usuario já registrado")) {
-                Map<String, String> errorBody = Map.of(
-                        "error", "Unprocessable Entity",
-                        "message", "Usuário já registrado"
-                );
-                return ResponseEntity.unprocessableEntity().body(errorBody);
-            }
-
-            // fallback para outros IllegalArgumentException
-            Map<String, String> errorBody = Map.of(
-                    "error", "Bad Request",
-                    "message", e.getMessage()
-            );
-            return ResponseEntity.badRequest().body(errorBody);
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.saveUser(registerRecordDto));
     }
 }

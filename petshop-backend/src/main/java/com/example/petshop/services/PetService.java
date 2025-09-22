@@ -8,6 +8,7 @@ import com.example.petshop.entities.RacaEntity;
 import com.example.petshop.repositories.ClienteRepository;
 import com.example.petshop.repositories.PetRepository;
 import com.example.petshop.repositories.RacaRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,8 +27,14 @@ public class PetService {
         this.clienteRepository = clienteRepository;
     }
 
-    public Optional<PetEntity> getPetById(Long id) {
-        return petRepository.findById(id);
+    public PetEntity getPetById(Long id) {
+        Optional<PetEntity> petEntity = petRepository.findById(id);
+
+        if (petEntity.isEmpty()) {
+            throw new EntityNotFoundException("Pet não encontrado com id: " + id);
+        }
+
+        return petEntity.get();
     }
 
     public List<PetEntity> getAllPets() {
@@ -37,10 +44,10 @@ public class PetService {
     @Transactional
     public PetEntity savePet(CreatePetRecordDto createPetRecordDto){
         RacaEntity racaEntity = racaRepository.findById(createPetRecordDto.racaId())
-                .orElseThrow(() -> new IllegalArgumentException("Raca not found with id: " + createPetRecordDto.racaId()));
+                .orElseThrow(() -> new EntityNotFoundException("Raca não encontrado com id: " + createPetRecordDto.racaId()));
 
         ClienteEntity clienteEntity = clienteRepository.findById(createPetRecordDto.clienteId())
-                .orElseThrow(() -> new IllegalArgumentException("Cliente not found with id: " + createPetRecordDto.clienteId()));
+                .orElseThrow(() -> new EntityNotFoundException("Cliente não encontrado com id: " + createPetRecordDto.clienteId()));
 
         PetEntity petEntity = PetEntity.builder()
                 .nome(createPetRecordDto.nome())
@@ -55,7 +62,7 @@ public class PetService {
     @Transactional
     public Optional<PetEntity> updatePet(Long id, UpdatePetRecordDto updatePetRecordDto) {
         RacaEntity racaEntity = racaRepository.findById(updatePetRecordDto.racaId())
-                .orElseThrow(() -> new IllegalArgumentException("Raca not found with id: " + updatePetRecordDto.racaId()));
+                .orElseThrow(() -> new EntityNotFoundException("Raca não encontrado com id: " + updatePetRecordDto.racaId()));
         return petRepository.findById(id)
                 .map(existingPet -> {
                     existingPet.setNome(updatePetRecordDto.nome());

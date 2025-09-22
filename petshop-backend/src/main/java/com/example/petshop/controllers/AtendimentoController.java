@@ -22,11 +22,9 @@ public class AtendimentoController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<AtendimentoEntity>> getAtendimentoById(@PathVariable Long id) {
-        Optional<AtendimentoEntity> atendimento = atendimentoService.getAtendimentoById(id);
-        if (atendimento.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
+    public ResponseEntity<AtendimentoEntity> getAtendimentoById(@PathVariable Long id) {
+        AtendimentoEntity atendimento = atendimentoService.getAtendimentoById(id);
+
         return ResponseEntity.ok(atendimento);
     }
 
@@ -38,24 +36,7 @@ public class AtendimentoController {
 
     @PostMapping
     public ResponseEntity saveAtendimento(@RequestBody CreateAtendimentoRecordDto createAtendimentoRecordDto) {
-        try {
-            return ResponseEntity.status(HttpStatus.CREATED).body(atendimentoService.saveAtendimento(createAtendimentoRecordDto));
-        } catch (IllegalArgumentException e) {
-            if (e.getMessage().contains("Pet not found")) {
-                Map<String, String> errorBody = Map.of(
-                        "error", "Unprocessable Entity",
-                        "message", "Pet informado não existe"
-                );
-                return ResponseEntity.unprocessableEntity().body(errorBody);
-            }
-
-            // fallback para outros IllegalArgumentException
-            Map<String, String> errorBody = Map.of(
-                    "error", "Bad Request",
-                    "message", e.getMessage()
-            );
-            return ResponseEntity.badRequest().body(errorBody);
-        }
+        return ResponseEntity.status(HttpStatus.CREATED).body(atendimentoService.saveAtendimento(createAtendimentoRecordDto));
     }
 
     @PutMapping("/{id}")
@@ -69,11 +50,6 @@ public class AtendimentoController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteAtendimento(@PathVariable Long id){
-        Optional<AtendimentoEntity> atendimento = atendimentoService.getAtendimentoById(id);
-        if (atendimento.isEmpty()){
-            return ResponseEntity.notFound().build();
-        }
-
         atendimentoService.deleteAtendimento(id);
         return ResponseEntity.ok(null);
     }
