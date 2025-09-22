@@ -26,7 +26,7 @@ public class UsuarioService implements UserDetailsService {
         }
 
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerRecordDto.password());
-        UserEntity newUser = new UserEntity().builder()
+        UserEntity newUser = UserEntity.builder()
                 .login(registerRecordDto.login())
                 .nome(registerRecordDto.nome())
                 .password(encryptedPassword)

@@ -33,17 +33,17 @@ public class EnderecoService {
 
     @Transactional
     public EnderecoEntity saveEndereco(CreateEnderecoRecordDto createEnderecoRecordDto){
-        EnderecoEntity enderecoEntity = new EnderecoEntity();
-
         ClienteEntity clienteEntity = clienteRepository.findById(createEnderecoRecordDto.clienteId())
                 .orElseThrow(() -> new IllegalArgumentException("Cliente not found with id: " + createEnderecoRecordDto.clienteId()));
 
-        enderecoEntity.setCliente(clienteEntity);
-        enderecoEntity.setLogradouro(createEnderecoRecordDto.logradouro());
-        enderecoEntity.setCidade(createEnderecoRecordDto.cidade());
-        enderecoEntity.setBairro(createEnderecoRecordDto.bairro());
-        enderecoEntity.setComplemento(createEnderecoRecordDto.complemento());
-        enderecoEntity.setTag(createEnderecoRecordDto.tag());
+        EnderecoEntity enderecoEntity = EnderecoEntity.builder()
+                .cliente(clienteEntity)
+                .logradouro(createEnderecoRecordDto.logradouro())
+                .cidade(createEnderecoRecordDto.cidade())
+                .bairro(createEnderecoRecordDto.bairro())
+                .complemento(createEnderecoRecordDto.complemento())
+                .tag(createEnderecoRecordDto.tag())
+                .build();
 
         return enderecoRepository.saveAndFlush(enderecoEntity);
     }

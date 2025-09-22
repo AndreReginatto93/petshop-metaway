@@ -42,11 +42,12 @@ public class PetService {
         ClienteEntity clienteEntity = clienteRepository.findById(createPetRecordDto.clienteId())
                 .orElseThrow(() -> new IllegalArgumentException("Cliente not found with id: " + createPetRecordDto.clienteId()));
 
-        PetEntity petEntity = new PetEntity();
-        petEntity.setNome(createPetRecordDto.nome());
-        petEntity.setDataNascimento(createPetRecordDto.dataNascimento());
-        petEntity.setRaca(racaEntity);
-        petEntity.setCliente(clienteEntity);
+        PetEntity petEntity = PetEntity.builder()
+                .nome(createPetRecordDto.nome())
+                .dataNascimento(createPetRecordDto.dataNascimento())
+                .raca(racaEntity)
+                .cliente(clienteEntity)
+                .build();
 
         return petRepository.save(petEntity);
     }

@@ -38,12 +38,12 @@ public class AtendimentoService {
         PetEntity petEntity = petRepository.findById(createAtendimentoRecordDto.petId())
                 .orElseThrow(() -> new IllegalArgumentException("Pet not found with id: " + createAtendimentoRecordDto.petId()));
 
-        AtendimentoEntity atendimentoEntity = new AtendimentoEntity();
-
-        atendimentoEntity.setDataAtendimento(createAtendimentoRecordDto.dataAtendimento());
-        atendimentoEntity.setDescricao(createAtendimentoRecordDto.descricao());
-        atendimentoEntity.setValor(createAtendimentoRecordDto.valor());
-        atendimentoEntity.setPet(petEntity);
+        AtendimentoEntity atendimentoEntity = AtendimentoEntity.builder()
+                .dataAtendimento(createAtendimentoRecordDto.dataAtendimento())
+                .descricao(createAtendimentoRecordDto.descricao())
+                .valor(createAtendimentoRecordDto.valor())
+                .pet(petEntity)
+                .build();
 
         return atendimentoRepository.saveAndFlush(atendimentoEntity);
     }

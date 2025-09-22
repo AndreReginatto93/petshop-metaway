@@ -32,15 +32,15 @@ public class ContatoService {
 
     @Transactional
     public ContatoEntity saveContato(CreateContatoRecordDto createContatoRecordDto){
-        ContatoEntity contatoEntity = new ContatoEntity();
-
         ClienteEntity clienteEntity = clienteRepository.findById(createContatoRecordDto.clienteId())
                 .orElseThrow(() -> new IllegalArgumentException("Cliente not found with id: " + createContatoRecordDto.clienteId()));
 
-        contatoEntity.setCliente(clienteEntity);
-        contatoEntity.setTipo(createContatoRecordDto.tipo());
-        contatoEntity.setValor(createContatoRecordDto.valor());
-        contatoEntity.setTag(createContatoRecordDto.tag());
+        ContatoEntity contatoEntity = ContatoEntity.builder()
+                .cliente(clienteEntity)
+                .tipo(createContatoRecordDto.tipo())
+                .valor(createContatoRecordDto.valor())
+                .tag(createContatoRecordDto.tag())
+                .build();
 
         return contatoRepository.saveAndFlush(contatoEntity);
     }

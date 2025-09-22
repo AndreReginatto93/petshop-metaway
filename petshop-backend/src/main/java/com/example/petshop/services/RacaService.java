@@ -27,10 +27,10 @@ public class RacaService {
 
     @Transactional
     public RacaEntity saveRaca(RacaRecordDto racaRecordDto){
-        RacaEntity racaEntity = new RacaEntity();
-
-        racaEntity.setDescricao(racaRecordDto.descricao());
-        racaEntity.setEspecie(racaRecordDto.especie());
+        RacaEntity racaEntity = RacaEntity.builder()
+                .descricao(racaRecordDto.descricao())
+                .especie(racaRecordDto.especie())
+                .build();
 
         return racaRepository.saveAndFlush(racaEntity);
     }

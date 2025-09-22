@@ -46,11 +46,11 @@ public class ClienteService {
 
     @Transactional
     public ClienteEntity saveCliente(CreateClienteRecordDto createClienteRecordDto){
-        ClienteEntity clienteEntity = new ClienteEntity();
-
-        clienteEntity.setNome(createClienteRecordDto.nome());
-        clienteEntity.setCpf(createClienteRecordDto.cpf());
-        clienteEntity.setDataCadastro(createClienteRecordDto.dataCadastro());
+        ClienteEntity clienteEntity = ClienteEntity.builder()
+                .nome(createClienteRecordDto.nome())
+                .cpf(createClienteRecordDto.cpf())
+                .dataCadastro(createClienteRecordDto.dataCadastro())
+                .build();
 
         return clienteRepository.saveAndFlush(clienteEntity);
     }
