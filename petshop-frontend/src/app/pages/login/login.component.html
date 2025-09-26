@@ -1,0 +1,25 @@
+<div class="login-container">
+  <h2>Login</h2>
+
+  <form [formGroup]="loginForm">
+    <div>
+      <label>Email</label>
+      <input type="email" formControlName="email" />
+      @if (loginForm.get('email')?.touched && loginForm.controls['email'].errors) {
+        <p>Email inválido</p>
+      }
+    </div>
+
+    <div>
+      <label>Senha</label>
+      <input type="password" formControlName="password" />
+      @if (loginForm.get('password')?.touched && loginForm.controls['password'].errors) {
+        <p>Senha inválida</p>
+      }
+    </div>
+
+    <button (click)="submit()" >Entrar</button>
+  </form>
+
+  
+</div>
