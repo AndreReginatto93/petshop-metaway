@@ -1,11 +1,11 @@
 <div class="login-container">
   <h2>Login</h2>
 
-  <form [formGroup]="loginForm">
+  <form [formGroup]="loginForm" (ngSubmit)="submit()">
     <div>
       <label>Email</label>
-      <input type="email" formControlName="email" />
-      @if (loginForm.get('email')?.touched && loginForm.controls['email'].errors) {
+      <input formControlName="login" />
+      @if (loginForm.get('login')?.touched && loginForm.controls['login'].errors) {
         <p>Email inválido</p>
       }
     </div>
@@ -18,8 +18,14 @@
       }
     </div>
 
-    <button (click)="submit()" >Entrar</button>
+    <button type="submit">
+    
+      Entrar
+    
+    </button>
   </form>
-
+  @if (errorMessage != "") {
+    <p>{{errorMessage}}</p>
+  }
   
 </div>
