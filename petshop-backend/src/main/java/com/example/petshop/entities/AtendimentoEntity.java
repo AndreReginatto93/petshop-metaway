@@ -18,7 +18,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Entity
 @Table(name = "atendimentos")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class AtendimentoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,7 +25,6 @@ public class AtendimentoEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "pet_id")
-//    @JsonBackReference
     private PetEntity pet;
 
     private String descricao;

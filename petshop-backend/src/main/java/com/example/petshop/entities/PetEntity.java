@@ -1,9 +1,6 @@
 package com.example.petshop.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -22,7 +19,6 @@ import java.util.Set;
 @NoArgsConstructor
 @Entity
 @Table(name = "pets")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class PetEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +26,6 @@ public class PetEntity {
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "raca_id")
-
     private RacaEntity raca;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -41,7 +36,7 @@ public class PetEntity {
     private LocalDate dataNascimento;
     private String nome;
 
-    @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-//    @JsonManagedReference
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY)
     private List<AtendimentoEntity> atendimentos = new ArrayList<>();
 }
