@@ -1,0 +1,20 @@
+.form-container {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* espaço entre elementos */
+  width: 400px; /* largura fixa ou responsiva */
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* espaçamento entre os campos */
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px; /* espaço entre botões */
+  margin-top: 20px;
+}

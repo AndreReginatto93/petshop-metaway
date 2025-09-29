@@ -1,0 +1,36 @@
+<div class="form-container">
+  @if (editing) {
+      <h2 mat-dialog-title>Editar Atendimento</h2>
+  }@else {
+      <h2 mat-dialog-title>Novo Atendimento</h2>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="salvar()" class="form-fields">
+    <mat-form-field appearance="fill">
+      <mat-label>Pet</mat-label>
+      <input matInput formControlName="petId" type="number" min="0">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Descrição</mat-label>
+      <input matInput formControlName="descricao">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Valor</mat-label>
+      <input matInput formControlName="valor" type="number" min="0">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Data do Atendimento</mat-label>
+      <input matInput formControlName="dataAtendimento" type="datetime-local">
+    </mat-form-field>
+
+    <div mat-dialog-actions class="actions">
+      <button mat-button type="button" (click)="cancelar()">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit">
+        {{ editing ? 'Salvar Alterações' : 'Criar' }}
+      </button>
+    </div>
+  </form>
+</div>

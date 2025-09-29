@@ -32,4 +32,12 @@ export class AtendimentosService {
   delete(id:number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/atendimentos/${id}`);
   }
+
+  create(atendimento: any) {
+    return this.http.post(`${this.apiUrl}/atendimentos`, atendimento);
+  }
+
+  update(id: number, atendimento: any) {
+    return this.http.put(`${this.apiUrl}/atendimentos/${id}`, atendimento);
+  }
 }
