@@ -2,13 +2,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { LoginResponse } from '../../types/login-response';
 import { tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
-  private apiUrl = 'http://localhost:8080/api/v1/auth/login';
+  private apiUrl = environment.apiUrl;
   
   constructor(private httpClient: HttpClient) { }
 
@@ -21,6 +22,6 @@ export class LoginService {
     }
 
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this.httpClient.post<LoginResponse>(this.apiUrl, json, { headers });
+    return this.httpClient.post<LoginResponse>(`${this.apiUrl}/auth/login`, json, { headers });
   }
 }
