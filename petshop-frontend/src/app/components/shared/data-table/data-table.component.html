@@ -1,0 +1,39 @@
+@if (loading) {
+    <div>Carregando...</div>
+}@else {
+    @if (data.length > 0) {
+        <table class="table">
+        <thead>
+            <tr>
+                @for (col of columns; track $index) {
+                    <th>{{ col.header }}</th>
+                }
+            <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            @for (row of data; track $index) {
+                <tr>
+                @for (col of columns; track $index) {
+                    <td>
+                        {{ format(getNestedValue(row, col.field), col.type) }}
+                    </td>
+                }
+
+                <td>
+                    <button (click)="edit.emit(row)">Editar</button>
+                    <button (click)="delete.emit(row)">Excluir</button>
+                </td>
+                </tr>
+            }
+        </tbody>
+        </table>
+    }@else {
+        <div>
+            Nenhum registro encontrado.
+        </div>
+    }
+
+}
+
+

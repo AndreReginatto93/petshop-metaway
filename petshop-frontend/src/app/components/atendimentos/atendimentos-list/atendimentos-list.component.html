@@ -1,0 +1,9 @@
+<h2>Lista de Atendimentos</h2>
+
+<app-data-table
+  [columns]="columns"
+  [data]="atendimentos"
+  [loading]="loading"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)">
+</app-data-table>

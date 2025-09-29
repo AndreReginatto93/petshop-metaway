@@ -6,7 +6,7 @@ export function authInterceptor(req: HttpRequest<unknown>, next: HttpHandlerFn) 
   const token = localStorage.getItem('token');
   if (!token) return next(req);
   const newReq = req.clone({
-    headers: req.headers.append('Bearer', token),
+    headers: req.headers.append('Authorization', token),
   });
   return next(newReq);
 }

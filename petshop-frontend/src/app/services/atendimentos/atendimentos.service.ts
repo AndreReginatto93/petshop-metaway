@@ -23,6 +23,13 @@ export class AtendimentosService {
     const headers = new HttpHeaders({ 
       'Content-Type': 'application/json'
     });
+
+    console.log(`${this.apiUrl}/atendimentos`);
+
     return this.http.get<AtendimentoEntity[]>(`${this.apiUrl}/atendimentos`, { headers });
+  }
+
+  delete(id:number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/atendimentos/${id}`);
   }
 }
