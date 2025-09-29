@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -27,31 +28,28 @@ export class LoginComponent {
     }, { updateOn: 'submit' })
   }
 
-  submit(){
+  async submit(){
     try{
-      //if (this.loading == true) return;
+      if (this.loading == true) return;
       this.loading = true;
+      
       this.errorMessage = "";
       if (this.loginForm.invalid) {
-        this.loginForm.markAllAsTouched(); // força exibir erros
-        console.log("markAllAsTouched");
+        this.loginForm.markAllAsTouched();
         return;
       }
 
       const { login, password } = this.loginForm.value;
-      console.log('user: %s, passsword: %s', login, password);
 
-      this.loginService.login(login, password).subscribe({
-        next: (res) => {
-          console.log('Login ok!', res);
-          localStorage.setItem('token', res.token); // exemplo
-          alert('Login realizado com sucesso!');
-        },
-        error: (err) => {
-          console.error(err);
-          this.errorMessage = 'Usuário ou senha inválidos';
-        }
-      });
+      try {
+        const res = await firstValueFrom(this.loginService.login(login, password));
+        localStorage.setItem('token', res.token); // exemplo
+        //alert('Login realizado com sucesso!');
+        console.log(res);
+      } catch (err: any) {
+        console.error(err);
+        this.errorMessage = 'Usuário ou senha inválidos';
+      }
     }finally{
       this.loading = false;
     }

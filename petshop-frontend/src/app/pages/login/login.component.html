@@ -3,10 +3,10 @@
 
   <form [formGroup]="loginForm" (ngSubmit)="submit()">
     <div>
-      <label>Email</label>
+      <label>Usuário</label>
       <input formControlName="login" />
       @if (loginForm.get('login')?.touched && loginForm.controls['login'].errors) {
-        <p>Email inválido</p>
+        <p class="error-message">Usuário inválido</p>
       }
     </div>
 
@@ -14,18 +14,21 @@
       <label>Senha</label>
       <input type="password" formControlName="password" />
       @if (loginForm.get('password')?.touched && loginForm.controls['password'].errors) {
-        <p>Senha inválida</p>
+        <p class="error-message">Senha inválida</p>
       }
     </div>
 
     <button type="submit">
-    
-      Entrar
-    
+      @if(loading){
+        <div class="loader"></div>
+      }@else{
+        <p class="button-text">Entrar</p>
+      }
     </button>
   </form>
   @if (errorMessage != "") {
-    <p>{{errorMessage}}</p>
+    <p class="error-message">{{errorMessage}}</p>
   }
+
   
 </div>

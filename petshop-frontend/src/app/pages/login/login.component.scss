@@ -12,7 +12,7 @@
   h2 {
     text-align: center;
     margin-bottom: 1.5rem;
-    color: #1976d2;
+    color: #000000;
     font-weight: 600;
   }
 
@@ -25,7 +25,7 @@
       font-size: 0.9rem;
       font-weight: 500;
       margin-bottom: 0.3rem;
-      color: #333;
+      color: #000000;
       display: block;
     }
 
@@ -44,11 +44,11 @@
       }
     }
 
-    p {
+    .button-text  {
       margin: 0.2rem 0 0;
       font-size: 0.85rem;
-      color: #d32f2f;
-    }
+      color: #ffffff;
+    }    
 
     button {
       padding: 12px;
@@ -60,6 +60,7 @@
       background: #1976d2;
       color: #fff;
       transition: background 0.2s, transform 0.1s;
+      height: 45px;
 
       &:hover {
         background: #1565c0;
@@ -71,10 +72,26 @@
     }
   }
 
-  p {
+  .error-message {
+    margin: 0.2rem 0 0;
     padding-top: 4px;
     font-size: 0.8rem;
     color: #d32f2f;
     font-weight: 500;
+  }
+
+  .loader {
+    border: 2px solid #f3f3f3; /* Light grey */
+    border-top: 2px solid #3498db; /* Blue */
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    animation: spin 2s linear infinite;
+    margin: 0 auto;
+  }
+
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 }
