@@ -8,8 +8,15 @@
   <form [formGroup]="form" (ngSubmit)="salvar()" class="form-fields">
     <mat-form-field appearance="fill">
       <mat-label>Pet</mat-label>
-      <input matInput formControlName="petId" type="number" min="0">
+      <mat-select formControlName="petId" required>
+        @for (pet of pets; track $index) {
+          <mat-option [value]="pet.id">
+            {{ pet.id }} - {{ pet.nome }} ({{ pet.raca.descricao }})
+          </mat-option>
+        }
+      </mat-select>
     </mat-form-field>
+
 
     <mat-form-field appearance="fill">
       <mat-label>Descrição</mat-label>
