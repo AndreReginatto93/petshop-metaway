@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { LoginService } from '../../services/login.service';
+import { LoginService } from '../../services/login/login.service';
 import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -20,7 +21,8 @@ export class LoginComponent {
   loading: boolean = false;
 
   constructor(
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router
   ){
     this.loginForm = new FormGroup({
       login: new FormControl('', [Validators.required]),
@@ -46,6 +48,7 @@ export class LoginComponent {
         localStorage.setItem('token', res.token); // exemplo
         //alert('Login realizado com sucesso!');
         console.log(res);
+        this.navigate();
       } catch (err: any) {
         console.error(err);
         this.errorMessage = 'Usuário ou senha inválidos';
@@ -56,6 +59,6 @@ export class LoginComponent {
   }
 
   navigate(){
-    
+    this.router.navigate(['/atendimentos']);
   }
 }
