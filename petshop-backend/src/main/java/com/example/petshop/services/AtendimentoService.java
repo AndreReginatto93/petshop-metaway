@@ -9,6 +9,7 @@ import com.example.petshop.repositories.AtendimentoRepository;
 import com.example.petshop.repositories.ClienteRepository;
 import com.example.petshop.repositories.PetRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -60,7 +61,7 @@ public class AtendimentoService {
 
     }
     public List<AtendimentoEntity> getAllAtendimentos() {
-        return atendimentoRepository.findAll();
+        return atendimentoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Transactional
