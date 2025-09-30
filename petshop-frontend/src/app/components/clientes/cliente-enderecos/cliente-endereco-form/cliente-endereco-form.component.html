@@ -1,0 +1,36 @@
+<div class="form-container">
+  @if (editing) {
+      <h2 mat-dialog-title>Editar Endereço</h2>
+  }@else {
+      <h2 mat-dialog-title>Novo Endereço</h2>
+  }
+
+  <form [formGroup]="form" (ngSubmit)="salvar()" class="form-fields">
+    <mat-form-field appearance="fill">
+      <mat-label>Logradouro</mat-label>
+      <input matInput formControlName="logradouro">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Cidade</mat-label>
+      <input matInput formControlName="cidade">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Bairro</mat-label>
+      <input matInput formControlName="bairro">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+      <mat-label>Complemento</mat-label>
+      <input matInput formControlName="complemento">
+    </mat-form-field>
+
+    <div mat-dialog-actions class="actions">
+      <button mat-button class="no-hover" type="button" (click)="cancelar()">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit">
+        {{ editing ? 'Salvar Alterações' : 'Criar' }}
+      </button>
+    </div>
+  </form>
+</div>

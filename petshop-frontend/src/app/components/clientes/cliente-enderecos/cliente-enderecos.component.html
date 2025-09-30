@@ -1,1 +1,9 @@
-<p>cliente-enderecos works!</p>
+<h2>Lista de Endereços</h2>
+
+<app-data-table
+  [columns]="columns"
+  [data]="enderecos"
+  [loading]="false"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)">
+</app-data-table>
