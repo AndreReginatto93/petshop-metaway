@@ -4,7 +4,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 export interface TableColumn {
   field: string;  // nome do campo no objeto
   header: string; // título da coluna
-  type?: 'date' | 'string' | 'number';
+  type?: 'date' | 'string' | 'number' | 'datetime';
 }
 
 @Component({
@@ -26,6 +26,9 @@ export class DataTableComponent {
   format(value: any, type?: string) {
     if (type === 'date' && value) {
       return this.datePipe.transform(value, 'dd/MM/yyyy');
+    }
+    if (type === 'datetime' && value) {
+      return this.datePipe.transform(value, 'dd/MM/yyyy HH:mm');
     }
     return value;
   }

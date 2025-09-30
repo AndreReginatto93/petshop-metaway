@@ -20,7 +20,7 @@ export class AtendimentoListComponent implements OnInit {
     { field: 'pet.nome', header: 'Nome do Pet' },
     { field: 'pet.raca.descricao', header: 'Raça' },
     { field: 'valor', header: 'Valor' },
-    { field: 'dataAtendimento', header: 'Data do atendimento', type: 'date'  }
+    { field: 'dataAtendimento', header: 'Data do atendimento', type: 'datetime'  }
   ];
   
   constructor(private atendimentoService: AtendimentosService,
