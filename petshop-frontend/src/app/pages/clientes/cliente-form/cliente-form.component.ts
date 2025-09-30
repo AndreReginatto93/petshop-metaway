@@ -8,6 +8,7 @@ import { ClienteEnderecosComponent } from "../../../components/clientes/cliente-
 import { ClientePetsComponent } from "../../../components/clientes/cliente-pets/cliente-pets.component";
 import { MatDialog } from '@angular/material/dialog';
 import { ClienteContatoFormComponent } from '../../../components/clientes/cliente-contatos/cliente-contato-form/cliente-contato-form.component';
+import { ClientePetFormComponent } from '../../../components/clientes/cliente-pets/cliente-pet-form/cliente-pet-form.component';
 
 
 @Component({
@@ -18,6 +19,7 @@ import { ClienteContatoFormComponent } from '../../../components/clientes/client
 })
 export class ClienteFormComponent {
   @ViewChild(ClienteContatosComponent) contatoListComponent!: ClienteContatosComponent;
+  @ViewChild(ClientePetsComponent) petListComponent!: ClientePetsComponent;
   cliente: ClienteEntity | null = null;      // null para criação, objeto para edição
   editing: boolean = false;
   loading: boolean = true;
@@ -83,6 +85,18 @@ export class ClienteFormComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.contatoListComponent.adicionarContato(result);
+      }
+    });
+  }
+
+  createPet() {
+    const dialogRef = this.dialog.open(ClientePetFormComponent, {
+      data: { clienteId: this.cliente?.id }
+    });
+  
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.petListComponent.adicionarPet(result);
       }
     });
   }

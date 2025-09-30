@@ -1,1 +1,9 @@
-<p>cliente-pets works!</p>
+<h2>Lista de Pets</h2>
+
+<app-data-table
+  [columns]="columns"
+  [data]="pets"
+  [loading]="false"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)">
+</app-data-table>

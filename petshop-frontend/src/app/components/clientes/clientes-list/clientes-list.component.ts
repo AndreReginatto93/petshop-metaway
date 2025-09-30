@@ -39,7 +39,7 @@ export class ClientesListComponent {
   }
 
   adicionarCliente(cliente: any) {
-    this.clientes.push(cliente);
+    this.clientes.unshift(cliente);
   }
 
   onEdit(cliente: ClienteEntity) {

@@ -24,7 +24,7 @@ export class ClienteContatosComponent {
   ) {}
 
   adicionarContato(contato: any) {
-    this.contatos.push(contato);
+    this.contatos.unshift(contato);
   }
 
   onEdit(contato: ContatoEntity) {

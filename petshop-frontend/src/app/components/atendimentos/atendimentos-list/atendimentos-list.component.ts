@@ -40,7 +40,7 @@ export class AtendimentoListComponent implements OnInit {
   }
 
   adicionarAtendimento(atendimento: any) {
-    this.atendimentos.push(atendimento);
+    this.atendimentos.unshift(atendimento);
   }
 
   onEdit(atendimento: AtendimentoEntity) {

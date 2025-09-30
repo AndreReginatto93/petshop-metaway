@@ -52,11 +52,11 @@
       <!-- Pets -->
       <mat-tab label="Pets" [disabled]="!cliente?.id">
         <div class="page">
-          <h1>Endereços</h1>
+          <h1>Pets</h1>
 
           <!-- Botões de ação da página -->
-          <button>
-            <p class="button-text">Novo Endereço</p>
+          <button (click)="createPet()">
+            <p class="button-text">Novo Pet</p>
           </button>
           
           <app-cliente-pets
