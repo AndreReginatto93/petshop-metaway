@@ -1,0 +1,71 @@
+<div class="p-4">
+  @if(editing){
+      <h2>Editar cliente</h2>
+  }@else {
+      <h2>Novo Cliente</h2>
+  }
+
+  @if(loading){
+    
+  }@else {
+    <mat-tab-group>
+      <!-- Dados -->
+      <mat-tab label="Dados">
+        <app-cliente-dados
+          [cliente]="cliente"
+          (salvar)="onSalvarCliente($event)">
+        </app-cliente-dados>
+      </mat-tab>
+
+      <!-- Contatos -->
+      <mat-tab label="Contatos" [disabled]="!cliente?.id">
+        <div class="page">
+          <h1>Contatos</h1>
+
+          <!-- Botões de ação da página -->
+          <button (click)="createContato()">
+            <p class="button-text">Novo Contato</p>
+          </button>
+
+          <app-cliente-contatos
+            [contatos]="cliente?.contatos ?? []">
+          </app-cliente-contatos>
+        </div>
+      </mat-tab>
+
+      <!-- Endereços -->
+      <mat-tab label="Endereços" [disabled]="!cliente?.id">
+        <div class="page">
+          <h1>Endereços</h1>
+
+          <!-- Botões de ação da página -->
+          <button>
+            <p class="button-text">Novo Endereço</p>
+          </button>
+          
+          <app-cliente-enderecos
+            [enderecos]="cliente?.enderecos ?? []">
+          </app-cliente-enderecos>
+        </div>
+      </mat-tab>
+
+      <!-- Pets -->
+      <mat-tab label="Pets" [disabled]="!cliente?.id">
+        <div class="page">
+          <h1>Endereços</h1>
+
+          <!-- Botões de ação da página -->
+          <button>
+            <p class="button-text">Novo Endereço</p>
+          </button>
+          
+          <app-cliente-pets
+            [pets]="cliente?.pets ?? []">
+          </app-cliente-pets>
+        </div>
+        
+      </mat-tab>
+    </mat-tab-group>
+  }
+  
+</div>

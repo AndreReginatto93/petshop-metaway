@@ -25,6 +25,16 @@ export class ClientesService {
 
   constructor(private http: HttpClient) {}
 
+  findById(id: number): Observable<ClienteEntity> {
+    const headers = new HttpHeaders({ 
+      'Content-Type': 'application/json'
+    });
+
+    console.log(`${this.apiUrl}/clientes`);
+
+    return this.http.get<ClienteEntity>(`${this.apiUrl}/clientes/${id}`, { headers });
+  }
+
   getItens(): Observable<ClienteEntity[]> {
     const headers = new HttpHeaders({ 
       'Content-Type': 'application/json'

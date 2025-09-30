@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { TableColumn, DataTableComponent } from '../../shared/data-table/data-table.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ClienteEntity, ClientesService } from '../../../services/clientes/clientes.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-clientes-list',
@@ -22,6 +23,7 @@ export class ClientesListComponent {
   
   constructor(private clienteService: ClientesService,
               private dialog: MatDialog,
+              private router: Router
   ) {}
 
   ngOnInit() {
@@ -42,7 +44,8 @@ export class ClientesListComponent {
 
   onEdit(cliente: ClienteEntity) {
     console.log('Editar', cliente);
-
+    //vai para cliente form
+    this.router.navigate([`/clientes/${cliente.id}`]);
   }
 
   onDelete(cliente: ClienteEntity) {

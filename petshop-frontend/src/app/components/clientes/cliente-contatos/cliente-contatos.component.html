@@ -1,0 +1,9 @@
+<h2>Lista de Contatos</h2>
+
+<app-data-table
+  [columns]="columns"
+  [data]="contatos"
+  [loading]="false"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)">
+</app-data-table>

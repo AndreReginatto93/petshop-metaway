@@ -7,7 +7,7 @@ import { RacaEntity } from '../racas/racas.service';
 export interface PetEntity {
   id: number;
   nome: number;
-  dataNacimento: string;
+  dataNascimento: string;
   raca: RacaEntity;
 }
 
