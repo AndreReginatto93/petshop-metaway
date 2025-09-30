@@ -9,6 +9,7 @@ import com.example.petshop.repositories.ClienteRepository;
 import com.example.petshop.repositories.PetRepository;
 import com.example.petshop.repositories.RacaRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,7 +43,7 @@ public class PetService {
     }
 
     public List<PetEntity> getAllPets() {
-        return petRepository.findAll();
+        return petRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Transactional
