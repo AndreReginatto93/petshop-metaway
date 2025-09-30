@@ -1,0 +1,9 @@
+<h2>Lista de Clientes</h2>
+
+<app-data-table
+  [columns]="columns"
+  [data]="clientes"
+  [loading]="loading"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)">
+</app-data-table>
