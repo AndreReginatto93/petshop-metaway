@@ -14,6 +14,7 @@ export const routes: Routes = [
         component: NavbarComponent,    
         canActivate: [AuthGuard],
         children: [
+            { path: '', component: AtendimentosComponent },
             { path: 'atendimentos', component: AtendimentosComponent },
             { path: 'pets', component: PetsComponent },
             { path: 'clientes', component: ClientesComponent, canActivate: [AdminGuard], },
@@ -22,5 +23,4 @@ export const routes: Routes = [
     },
     { path: 'login', component: LoginComponent },
 
-    { path: '**', redirectTo: 'atendimentos' }
 ];

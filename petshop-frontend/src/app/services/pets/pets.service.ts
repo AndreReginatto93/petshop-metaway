@@ -2,14 +2,15 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { RacaEntity } from '../racas/racas.service';
 
 export interface PetEntity {
   id: number;
-  pet: any;
-  descricao: string;
-  valor: number;
-  dataAtendimento: string;
+  nome: number;
+  dataNacimento: string;
+  raca: RacaEntity;
 }
+
 
 @Injectable({
   providedIn: 'root'
