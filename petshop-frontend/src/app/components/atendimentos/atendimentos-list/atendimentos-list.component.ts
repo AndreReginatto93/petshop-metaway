@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { TableColumn, DataTableComponent } from '../../shared/data-table/data-table.component';
 import { AtendimentoEntity, AtendimentosService } from '../../../services/atendimentos/atendimentos.service';
 import { MatDialog } from '@angular/material/dialog';

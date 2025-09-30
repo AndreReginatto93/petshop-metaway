@@ -50,6 +50,10 @@ export class AtendimentoFormComponent implements OnInit {
       dataAtendimento: [this.data?.dataAtendimento || dataHoraAtual, Validators.required]
     });
 
+    if (this.editing) {
+      this.form.get('petId')?.disable();
+    }
+
     // Carrega pets do backend
     this.petService.getItens().subscribe({
       next: (res) => this.pets = res,

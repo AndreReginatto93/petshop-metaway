@@ -2,3 +2,36 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+button {
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    background: #1976d2;
+    color: #fff;
+    transition: background 0.2s, transform 0.1s;
+    height: 45px;
+
+    &:hover {
+    background: #1565c0;
+    }
+
+    &:active {
+    transform: scale(0.97);
+    }
+
+    .button-text  {
+      margin: 0.2rem 0 0;
+      font-size: 0.85rem;
+      color: #ffffff;
+    }
+}
+
+button.no-hover:hover {
+  background: inherit;   // mantém o background original
+  transform: none;       // tira o efeito de "apertar"
+  cursor: default;       // se quiser que nem mude o cursor
+}

@@ -21,8 +21,12 @@
                 }
 
                 <td>
-                    <button (click)="edit.emit(row)">Editar</button>
-                    <button (click)="delete.emit(row)">Excluir</button>
+                    <button (click)="edit.emit(row)">
+                        <p class="button-text">Editar</p>
+                    </button>
+                    <button (click)="delete.emit(row)">
+                        <p class="button-text">Excluir</p>
+                    </button>
                 </td>
                 </tr>
             }
