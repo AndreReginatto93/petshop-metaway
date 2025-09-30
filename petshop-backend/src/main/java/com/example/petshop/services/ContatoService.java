@@ -7,6 +7,7 @@ import com.example.petshop.entities.contato.ContatoEntity;
 import com.example.petshop.repositories.ClienteRepository;
 import com.example.petshop.repositories.ContatoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,7 +40,7 @@ public class ContatoService {
     }
 
     public List<ContatoEntity> getAllContatos() {
-        return contatoRepository.findAll();
+        return contatoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Transactional

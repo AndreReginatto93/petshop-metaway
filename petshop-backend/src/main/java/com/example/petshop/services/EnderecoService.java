@@ -10,6 +10,7 @@ import com.example.petshop.entities.contato.ContatoEntity;
 import com.example.petshop.repositories.ClienteRepository;
 import com.example.petshop.repositories.EnderecoRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,7 +42,7 @@ public class EnderecoService {
     }
 
     public List<EnderecoEntity> getAllEnderecos() {
-        return enderecoRepository.findAll();
+        return enderecoRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Transactional

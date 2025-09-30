@@ -5,6 +5,7 @@ import com.example.petshop.dtos.cliente.UpdateClienteRecordDto;
 import com.example.petshop.entities.ClienteEntity;
 import com.example.petshop.repositories.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,7 +41,7 @@ public class ClienteService {
     }
 
     public List<ClienteEntity> getAllClientes() {
-        return clienteRepository.findAll();
+        return clienteRepository.findAll(Sort.by(Sort.Direction.DESC, "id"));
     }
 
     @Transactional
