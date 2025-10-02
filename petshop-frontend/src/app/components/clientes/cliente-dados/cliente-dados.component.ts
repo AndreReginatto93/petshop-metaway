@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClienteEntity, ClientesService } from '../../../services/clientes/clientes.service';
 import { MatInputModule } from "@angular/material/input";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cliente-dados',
@@ -16,7 +17,10 @@ export class ClienteDadosComponent {
   form!: FormGroup;
   editing: boolean = false;
 
-  constructor(private fb: FormBuilder, private clienteService: ClientesService) {}
+  constructor(private fb: FormBuilder, 
+              private clienteService: ClientesService,
+              private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.editing = !!this.cliente;
@@ -42,16 +46,28 @@ export class ClienteDadosComponent {
 
     const dadosCliente = this.form.value;
 
-    if (this.editing) {
-      this.clienteService.update(this.cliente!.id, dadosCliente).subscribe({
-        next: (res) => this.salvar.emit(res),
-        error: (err) => console.error(err)
-      });
-    } else {
-      this.clienteService.create(dadosCliente).subscribe({
-        next: (res) => this.salvar.emit(res),
-        error: (err) => console.error(err)
-      });
+    if (this.isUserPath()){
+      this.clienteService.updateMe(this.cliente!.id, dadosCliente).subscribe({
+          next: (res) => this.salvar.emit(res),
+          error: (err) => console.error(err)
+        });
+    }else{
+      if (this.editing) {
+        this.clienteService.update(this.cliente!.id, dadosCliente).subscribe({
+          next: (res) => this.salvar.emit(res),
+          error: (err) => console.error(err)
+        });
+      } else {
+        this.clienteService.create(dadosCliente).subscribe({
+          next: (res) => this.salvar.emit(res),
+          error: (err) => console.error(err)
+        });
+      }
     }
+  }
+
+  isUserPath(){
+    const currentUrl = this.router.url;
+    return currentUrl.includes("/profile");
   }
 }

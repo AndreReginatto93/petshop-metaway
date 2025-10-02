@@ -3,6 +3,7 @@ import { PetEntity, PetsService } from '../../../services/pets/pets.service';
 import { TableColumn, DataTableComponent } from '../../shared/data-table/data-table.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ClientePetFormComponent } from './cliente-pet-form/cliente-pet-form.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cliente-pets',
@@ -22,6 +23,7 @@ export class ClientePetsComponent {
   
   constructor(private petService: PetsService,
               private dialog: MatDialog,
+              private router: Router,
   ) {}
 
   adicionarPet(pet: any) {
@@ -57,6 +59,11 @@ export class ClientePetsComponent {
         alert('Não foi possível excluir o pet.');
       }
     });
+  }
+
+  isUserPath(){
+    const currentUrl = this.router.url;
+    return currentUrl.includes("/profile");
   }
 }
 

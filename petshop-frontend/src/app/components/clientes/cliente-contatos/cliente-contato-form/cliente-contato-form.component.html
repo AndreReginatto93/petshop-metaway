@@ -6,9 +6,12 @@
   }
 
   <form [formGroup]="form" (ngSubmit)="salvar()" class="form-fields">
-    <mat-form-field appearance="fill">
-      <mat-label>Tipo</mat-label>
-      <input matInput formControlName="tipo">
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="tipo">
+            <mat-option value="EMAIL">Email</mat-option>
+            <mat-option value="TELEFONE">Telefone</mat-option>
+        </mat-select>
     </mat-form-field>
 
     <mat-form-field appearance="fill">

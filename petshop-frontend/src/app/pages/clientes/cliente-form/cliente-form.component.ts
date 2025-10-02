@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { ClienteDadosComponent } from "../../../components/clientes/cliente-dados/cliente-dados.component";
 import { ActivatedRoute, Router } from '@angular/router';
 import { ClienteEntity, ClientesService } from '../../../services/clientes/clientes.service';
-  import { MatTabsModule } from '@angular/material/tabs';
+import { MatTabsModule } from '@angular/material/tabs';
 import { ClienteContatosComponent } from "../../../components/clientes/cliente-contatos/cliente-contatos.component";
 import { ClienteEnderecosComponent } from "../../../components/clientes/cliente-enderecos/cliente-enderecos.component";
 import { ClientePetsComponent } from "../../../components/clientes/cliente-pets/cliente-pets.component";

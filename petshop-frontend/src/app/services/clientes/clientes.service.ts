@@ -35,6 +35,16 @@ export class ClientesService {
     return this.http.get<ClienteEntity>(`${this.apiUrl}/clientes/${id}`, { headers });
   }
 
+    findMe(): Observable<ClienteEntity> {
+    const headers = new HttpHeaders({ 
+      'Content-Type': 'application/json'
+    });
+
+    console.log(`${this.apiUrl}/clientes/me`);
+
+    return this.http.get<ClienteEntity>(`${this.apiUrl}/clientes/me`, { headers });
+  }
+
   getItens(): Observable<ClienteEntity[]> {
     const headers = new HttpHeaders({ 
       'Content-Type': 'application/json'
@@ -55,5 +65,9 @@ export class ClientesService {
 
   update(id: number, cliente: any) {
     return this.http.put(`${this.apiUrl}/clientes/${id}`, cliente);
+  }
+
+  updateMe(id: number, cliente: any) {
+    return this.http.put(`${this.apiUrl}/clientes/me`, cliente);
   }
 }

@@ -47,8 +47,27 @@ export class ClienteContatoFormComponent {
     }
 
     this.form = this.fb.group({
-      tipo: [this.data?.contato?.tipo || '', Validators.required],
-      valor: [this.data?.contato?.valor || '', Validators.required],
+      tipo: [this.data?.contato?.tipo || 'EMAIL', Validators.required],
+      valor: [this.data?.contato?.valor || '', [Validators.required, Validators.email]],
+    });
+
+    // Observa mudanças no tipo
+    this.form.get('tipo')?.valueChanges.subscribe(tipo => {
+      const valorControl = this.form.get('valor');
+      valorControl?.clearValidators(); 
+
+      if (tipo === 'EMAIL') {
+        valorControl?.setValidators([Validators.required, Validators.email]);
+      } else if (tipo === 'TELEFONE') {
+        valorControl?.setValidators([
+          Validators.required,
+          Validators.pattern(/^\d{10,11}$/) 
+        ]);
+      } else {
+        valorControl?.setValidators([Validators.required]);
+      }
+
+      valorControl?.updateValueAndValidity();
     });
   }
 

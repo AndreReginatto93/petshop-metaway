@@ -29,6 +29,16 @@ export class AtendimentosService {
     return this.http.get<AtendimentoEntity[]>(`${this.apiUrl}/atendimentos`, { headers });
   }
 
+    getMe(): Observable<AtendimentoEntity[]> {
+    const headers = new HttpHeaders({ 
+      'Content-Type': 'application/json'
+    });
+
+    console.log(`${this.apiUrl}/atendimentos/me`);
+
+    return this.http.get<AtendimentoEntity[]>(`${this.apiUrl}/atendimentos/me`, { headers });
+  }
+
   delete(id:number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/atendimentos/${id}`);
   }

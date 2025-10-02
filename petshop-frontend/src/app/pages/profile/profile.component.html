@@ -1,0 +1,52 @@
+<div class="p-4">
+    <h2>Meu Perfil</h2>
+
+  @if(loading){
+    
+  }@else {
+    <mat-tab-group>
+      <!-- Dados -->
+      <mat-tab label="Dados">
+        <app-cliente-dados
+          [cliente]="cliente"
+          (salvar)="onSalvarCliente($event)">
+        </app-cliente-dados>
+      </mat-tab>
+
+      <!-- Contatos -->
+      <mat-tab label="Contatos" [disabled]="!cliente?.id">
+        <div class="page">
+          <h1>Contatos</h1>
+
+          <app-cliente-contatos
+            [contatos]="cliente?.contatos ?? []">
+          </app-cliente-contatos>
+        </div>
+      </mat-tab>
+
+      <!-- Endereços -->
+      <mat-tab label="Endereços" [disabled]="!cliente?.id">
+        <div class="page">
+          <h1>Endereços</h1>
+          
+          <app-cliente-enderecos
+            [enderecos]="cliente?.enderecos ?? []">
+          </app-cliente-enderecos>
+        </div>
+      </mat-tab>
+
+      <!-- Pets -->
+      <mat-tab label="Pets" [disabled]="!cliente?.id">
+        <div class="page">
+          <h1>Pets</h1>
+          
+          <app-cliente-pets
+            [pets]="cliente?.pets ?? []">
+          </app-cliente-pets>
+        </div>
+        
+      </mat-tab>
+    </mat-tab-group>
+  }
+  
+</div>

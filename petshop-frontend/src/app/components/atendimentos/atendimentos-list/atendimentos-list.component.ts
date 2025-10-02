@@ -3,6 +3,7 @@ import { TableColumn, DataTableComponent } from '../../shared/data-table/data-ta
 import { AtendimentoEntity, AtendimentosService } from '../../../services/atendimentos/atendimentos.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AtendimentoFormComponent } from '../atendimento-form/atendimento-form.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-atendimento-list',
@@ -25,18 +26,33 @@ export class AtendimentoListComponent implements OnInit {
   
   constructor(private atendimentoService: AtendimentosService,
               private dialog: MatDialog,
+              private router: Router,
   ) {}
 
   ngOnInit() {
-    this.atendimentoService.getItens().subscribe({
-      next: (res) => {
-        this.atendimentos = res;
-        this.loading = false;
-      },
-      error: () => {
-        this.loading = false;
-      }
-    });
+    if (this.isUserPath()) {
+      this.atendimentoService.getMe().subscribe({
+        next: (res) => {
+          this.atendimentos = res;
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
+        }
+      });
+    }
+    else {
+      this.atendimentoService.getItens().subscribe({
+        next: (res) => {
+          this.atendimentos = res;
+          this.loading = false;
+        },
+        error: () => {
+          this.loading = false;
+        }
+      });
+    }
+    
   }
 
   adicionarAtendimento(atendimento: any) {
@@ -72,5 +88,10 @@ export class AtendimentoListComponent implements OnInit {
         alert('Não foi possível excluir o atendimento.');
       }
     });
+  }
+
+  isUserPath(){
+    const currentUrl = this.router.url;
+    return currentUrl.includes("/me");
   }
 }

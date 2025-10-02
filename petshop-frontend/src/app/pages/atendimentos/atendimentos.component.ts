@@ -3,6 +3,7 @@ import { AtendimentoListComponent } from "../../components/atendimentos/atendime
 import { AtendimentosService } from '../../services/atendimentos/atendimentos.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AtendimentoFormComponent } from '../../components/atendimentos/atendimento-form/atendimento-form.component';
+import { AuthService } from '../../services/auth/auth.service';
 
 @Component({
   selector: 'app-atendimentos',
@@ -14,6 +15,7 @@ export class AtendimentosComponent {
   @ViewChild(AtendimentoListComponent) listComponent!: AtendimentoListComponent;
   
   constructor(private atendimentoService: AtendimentosService,
+              private authService: AuthService,
               private dialog: MatDialog,
   ) {}
 
@@ -28,5 +30,10 @@ export class AtendimentosComponent {
       }
     });
   }
+
+  isAdmin(){
+    return this.authService.isAdmin();
+  }
+
 
 }

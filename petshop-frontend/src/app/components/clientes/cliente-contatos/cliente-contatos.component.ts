@@ -3,6 +3,7 @@ import { DataTableComponent, TableColumn } from '../../shared/data-table/data-ta
 import { ContatoEntity, ContatosService } from '../../../services/contatos/contatos.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ClienteContatoFormComponent } from './cliente-contato-form/cliente-contato-form.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cliente-contatos',
@@ -21,6 +22,7 @@ export class ClienteContatosComponent {
   
   constructor(private contatoService: ContatosService,
               private dialog: MatDialog,
+              private router: Router,
   ) {}
 
   adicionarContato(contato: any) {
@@ -56,5 +58,10 @@ export class ClienteContatosComponent {
         alert('Não foi possível excluir o contato.');
       }
     });
+  }
+
+  isUserPath(){
+    const currentUrl = this.router.url;
+    return currentUrl.includes("/profile");
   }
 }

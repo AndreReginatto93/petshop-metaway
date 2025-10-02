@@ -3,6 +3,7 @@ import { EnderecoEntity, EnderecosService } from '../../../services/enderecos/en
 import { DataTableComponent, TableColumn } from '../../shared/data-table/data-table.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ClienteEnderecoFormComponent } from './cliente-endereco-form/cliente-endereco-form.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-cliente-enderecos',
@@ -23,6 +24,7 @@ export class ClienteEnderecosComponent {
   
   constructor(private enderecoService: EnderecosService,
               private dialog: MatDialog,
+              private router: Router,
   ) {}
 
   adicionarEndereco(endereco: any) {
@@ -58,5 +60,10 @@ export class ClienteEnderecosComponent {
         alert('Não foi possível excluir o endereço.');
       }
     });
+  }
+
+  isUserPath(){
+    const currentUrl = this.router.url;
+    return currentUrl.includes("/profile");
   }
 }

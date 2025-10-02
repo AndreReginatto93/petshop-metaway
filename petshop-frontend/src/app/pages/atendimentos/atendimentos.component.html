@@ -1,10 +1,12 @@
 <div class="page">
   <h1>Atendimentos</h1>
 
-  <!-- Botões de ação da página -->
-  <button (click)="abrirNovoAtendimento()">
-    <p class="button-text">Novo Atendimento</p>
-  </button>
-
+  @if (isAdmin()) {
+    <!-- Botões de ação da página -->
+    <button (click)="abrirNovoAtendimento()">
+      <p class="button-text">Novo Atendimento</p>
+    </button>
+  }
+  
   <app-atendimento-list></app-atendimento-list>
 </div>

@@ -4,6 +4,8 @@
   [columns]="columns"
   [data]="contatos"
   [loading]="false"
+  [canEdit]="!isUserPath()"
+  [canDelete]="!isUserPath()"
   (edit)="onEdit($event)"
   (delete)="onDelete($event)">
 </app-data-table>
