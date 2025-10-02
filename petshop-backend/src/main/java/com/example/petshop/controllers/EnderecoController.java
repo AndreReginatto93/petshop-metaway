@@ -5,6 +5,7 @@ import com.example.petshop.dtos.endereco.UpdateEnderecoRecordDto;
 import com.example.petshop.entities.EnderecoEntity;
 import com.example.petshop.entities.contato.ContatoEntity;
 import com.example.petshop.services.EnderecoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -42,14 +43,14 @@ public class EnderecoController {
     }
 
     @PostMapping
-    public ResponseEntity saveEndereco(@RequestBody CreateEnderecoRecordDto createEnderecoRecordDto) {
+    public ResponseEntity saveEndereco(@RequestBody @Valid CreateEnderecoRecordDto createEnderecoRecordDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(enderecoService.saveEndereco(createEnderecoRecordDto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<EnderecoEntity> updateEndereco(
             @PathVariable Long id,
-            @RequestBody UpdateEnderecoRecordDto updateEnderecoRecordDto) {
+            @RequestBody @Valid UpdateEnderecoRecordDto updateEnderecoRecordDto) {
         return enderecoService.updateEndereco(id, updateEnderecoRecordDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -58,7 +59,7 @@ public class EnderecoController {
     @PutMapping("/me/{id}")
     public ResponseEntity<EnderecoEntity> updateEnderecoByLogin(
             @PathVariable Long id,
-            @RequestBody UpdateEnderecoRecordDto updateEnderecoRecordDto,
+            @RequestBody @Valid UpdateEnderecoRecordDto updateEnderecoRecordDto,
             @AuthenticationPrincipal UserDetails userDetails) {
         return enderecoService.updateEnderecoByLogin(id, updateEnderecoRecordDto, userDetails.getUsername())
                 .map(ResponseEntity::ok)

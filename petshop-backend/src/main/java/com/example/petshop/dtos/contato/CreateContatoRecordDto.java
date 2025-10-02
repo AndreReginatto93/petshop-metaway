@@ -1,9 +1,15 @@
 package com.example.petshop.dtos.contato;
 
 import com.example.petshop.entities.contato.ContatoTipo;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 
-public record CreateContatoRecordDto(Long clienteId,
-                                     String tag,
-                                     ContatoTipo tipo,
-                                     String valor) {
+public record CreateContatoRecordDto(
+        @NotNull(message = "clienteId é obrigatório")
+        Long clienteId,
+        String tag,
+        ContatoTipo tipo,
+        @NotBlank(message = "valor é obrigatório")
+        String valor) {
 }

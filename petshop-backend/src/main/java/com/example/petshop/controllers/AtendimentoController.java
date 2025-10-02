@@ -4,6 +4,7 @@ import com.example.petshop.dtos.atendimento.CreateAtendimentoRecordDto;
 import com.example.petshop.dtos.atendimento.UpdateAtendimentoRecordDto;
 import com.example.petshop.entities.AtendimentoEntity;
 import com.example.petshop.services.AtendimentoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -48,14 +49,14 @@ public class AtendimentoController {
     }
 
     @PostMapping
-    public ResponseEntity saveAtendimento(@RequestBody CreateAtendimentoRecordDto createAtendimentoRecordDto) {
+    public ResponseEntity saveAtendimento(@RequestBody @Valid CreateAtendimentoRecordDto createAtendimentoRecordDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(atendimentoService.saveAtendimento(createAtendimentoRecordDto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<AtendimentoEntity> updateAtendimento(
             @PathVariable Long id,
-            @RequestBody UpdateAtendimentoRecordDto updateAtendimentoRecordDto) {
+            @RequestBody @Valid UpdateAtendimentoRecordDto updateAtendimentoRecordDto) {
         return atendimentoService.updateAtendimento(id, updateAtendimentoRecordDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());

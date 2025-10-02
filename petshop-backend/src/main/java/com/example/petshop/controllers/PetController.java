@@ -4,6 +4,7 @@ import com.example.petshop.dtos.pet.CreatePetRecordDto;
 import com.example.petshop.dtos.pet.UpdatePetRecordDto;
 import com.example.petshop.entities.PetEntity;
 import com.example.petshop.services.PetService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -41,13 +42,13 @@ public class PetController {
     }
 
     @PostMapping
-    public ResponseEntity savePet(@RequestBody CreatePetRecordDto petRecordDto){
+    public ResponseEntity savePet(@RequestBody @Valid CreatePetRecordDto petRecordDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(petService.savePet(petRecordDto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity updatePet(@PathVariable Long id,
-                                    @RequestBody UpdatePetRecordDto petRecordDto) {
+                                    @RequestBody @Valid UpdatePetRecordDto petRecordDto) {
         return petService.updatePet(id, petRecordDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -57,7 +58,7 @@ public class PetController {
 
     @PutMapping("/me/{id}")
     public ResponseEntity updatePetByLogin(@PathVariable Long id,
-                                           @RequestBody UpdatePetRecordDto petRecordDto,
+                                           @RequestBody @Valid UpdatePetRecordDto petRecordDto,
                                            @AuthenticationPrincipal UserDetails userDetails) {
         return petService.updateContatoByLogin(id, petRecordDto, userDetails.getUsername())
                 .map(ResponseEntity::ok)

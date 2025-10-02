@@ -4,6 +4,7 @@ import com.example.petshop.dtos.cliente.CreateClienteRecordDto;
 import com.example.petshop.dtos.cliente.UpdateClienteRecordDto;
 import com.example.petshop.entities.ClienteEntity;
 import com.example.petshop.services.ClienteService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -42,14 +43,14 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteEntity> saveCliente(@RequestBody CreateClienteRecordDto createClienteRecordDto){
+    public ResponseEntity<ClienteEntity> saveCliente(@RequestBody @Valid CreateClienteRecordDto createClienteRecordDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(clienteService.saveCliente(createClienteRecordDto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ClienteEntity> updateCliente(
             @PathVariable Long id,
-            @RequestBody UpdateClienteRecordDto updateClienteRecordDto) {
+            @RequestBody @Valid UpdateClienteRecordDto updateClienteRecordDto) {
         return clienteService.updateCliente(id, updateClienteRecordDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -57,7 +58,7 @@ public class ClienteController {
 
     @PutMapping("/me")
     public ResponseEntity<ClienteEntity> updateOwnCliente(@AuthenticationPrincipal UserDetails userDetails,
-                                                          @RequestBody UpdateClienteRecordDto updateClienteRecordDto) {
+                                                          @RequestBody @Valid UpdateClienteRecordDto updateClienteRecordDto) {
         return ResponseEntity.status(HttpStatus.OK).body(clienteService.updateClienteByCpf(userDetails.getUsername(), updateClienteRecordDto));
     }
 

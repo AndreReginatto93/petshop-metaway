@@ -5,6 +5,7 @@ import com.example.petshop.dtos.contato.UpdateContatoRecordDto;
 import com.example.petshop.entities.contato.ContatoEntity;
 import com.example.petshop.entities.contato.ContatoTipo;
 import com.example.petshop.services.ContatoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -43,14 +44,14 @@ public class ContatoController {
     }
 
     @PostMapping
-    public ResponseEntity saveContato(@RequestBody CreateContatoRecordDto createContatoRecordDto) {
+    public ResponseEntity saveContato(@RequestBody @Valid CreateContatoRecordDto createContatoRecordDto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(contatoService.saveContato(createContatoRecordDto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ContatoEntity> updateContato(
             @PathVariable Long id,
-            @RequestBody UpdateContatoRecordDto updateContatoRecordDto) {
+            @RequestBody @Valid UpdateContatoRecordDto updateContatoRecordDto) {
         return contatoService.updateContato(id, updateContatoRecordDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
@@ -59,7 +60,7 @@ public class ContatoController {
     @PutMapping("/me/{id}")
     public ResponseEntity<ContatoEntity> updateContatoByLogin(
             @PathVariable Long id,
-            @RequestBody UpdateContatoRecordDto updateContatoRecordDto,
+            @RequestBody @Valid UpdateContatoRecordDto updateContatoRecordDto,
             @AuthenticationPrincipal UserDetails userDetails) {
         return contatoService.updateContatoByLogin(id, updateContatoRecordDto, userDetails.getUsername())
                 .map(ResponseEntity::ok)

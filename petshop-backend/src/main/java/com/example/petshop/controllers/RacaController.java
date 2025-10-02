@@ -3,6 +3,7 @@ package com.example.petshop.controllers;
 import com.example.petshop.dtos.RacaRecordDto;
 import com.example.petshop.entities.RacaEntity;
 import com.example.petshop.services.RacaService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,14 +33,14 @@ public class RacaController {
     }
 
     @PostMapping
-    public ResponseEntity<RacaEntity> saveRaca(@RequestBody RacaRecordDto racaRecordDto){
+    public ResponseEntity<RacaEntity> saveRaca(@RequestBody @Valid RacaRecordDto racaRecordDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(racaService.saveRaca(racaRecordDto));
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<RacaEntity> updateRaca(
             @PathVariable Long id,
-            @RequestBody RacaRecordDto racaRecordDto) {
+            @RequestBody @Valid RacaRecordDto racaRecordDto) {
         return racaService.updateRaca(id, racaRecordDto)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
