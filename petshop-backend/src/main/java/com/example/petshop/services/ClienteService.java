@@ -49,7 +49,6 @@ public class ClienteService {
         ClienteEntity clienteEntity = ClienteEntity.builder()
                 .nome(createClienteRecordDto.nome())
                 .cpf(createClienteRecordDto.cpf())
-                .dataCadastro(createClienteRecordDto.dataCadastro())
                 .build();
 
         return clienteRepository.saveAndFlush(clienteEntity);

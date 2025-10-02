@@ -11,7 +11,5 @@ public record CreateClienteRecordDto(
         String nome,
         @NotBlank(message = "cpf é obrigatório")
         @Pattern(regexp = "\\d{11}", message = "CPF deve ter 11 números")
-        String cpf,
-        @NotNull(message = "dataCadastro é obrigatório")
-        LocalDateTime dataCadastro) {
+        String cpf) {
 }
