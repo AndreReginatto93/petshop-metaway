@@ -49,7 +49,7 @@ export class ClienteContatoFormComponent {
     this.form = this.fb.group({
       tipo: [this.data?.contato?.tipo || 'EMAIL', Validators.required],
       valor: [this.data?.contato?.valor || '', [Validators.required, Validators.email]],
-    });
+    }, { updateOn: 'submit' });
 
     // Observa mudanças no tipo
     this.form.get('tipo')?.valueChanges.subscribe(tipo => {
@@ -72,7 +72,10 @@ export class ClienteContatoFormComponent {
   }
 
   salvar() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     const contato = this.form.value;
 
@@ -97,4 +100,5 @@ export class ClienteContatoFormComponent {
   cancelar() {
     this.dialogRef.close();
   }
+
 }

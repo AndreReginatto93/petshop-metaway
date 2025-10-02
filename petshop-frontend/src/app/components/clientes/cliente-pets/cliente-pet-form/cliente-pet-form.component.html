@@ -9,10 +9,13 @@
     <mat-form-field appearance="fill">
       <mat-label>Nome</mat-label>
       <input matInput formControlName="nome">
+        <mat-error *ngIf="form.get('nome')?.hasError('required')">
+          Nome é obrigatório
+        </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
-      <mat-label>Pet</mat-label>
+      <mat-label>Raça</mat-label>
       <mat-select formControlName="racaId" required>
         @for (raca of racas; track $index) {
           <mat-option [value]="raca.id">
@@ -20,6 +23,9 @@
           </mat-option>
         }
       </mat-select>
+      <mat-error *ngIf="form.get('racaId')?.hasError('required')">
+        Raça é obrigatório
+      </mat-error>
     </mat-form-field>
 
      <mat-form-field appearance="fill">

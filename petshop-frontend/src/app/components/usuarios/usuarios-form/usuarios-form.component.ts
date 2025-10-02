@@ -35,15 +35,18 @@ export class UsuariosFormComponent {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      login: ['', { validators: [Validators.required, Validators.pattern(/^\d{11}$/)], updateOn: 'submit' }],
+      login: ['',  [Validators.required, Validators.pattern(/^\d{11}$/)]],
       nome: ['', Validators.required],
       role: ['USER', Validators.required],
-    });
+    }, { updateOn: 'submit' });
     
   }
 
   salvar() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     const usuario = this.form.value;
 

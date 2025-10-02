@@ -50,11 +50,14 @@ export class ClienteEnderecoFormComponent {
       cidade: [this.data?.endereco?.cidade || '', Validators.required],
       bairro: [this.data?.endereco?.bairro || '', Validators.required],
       complemento: [this.data?.endereco?.complemento || ''],
-    });
+    }, { updateOn: 'submit' });
   }
 
   salvar() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     const endereco = this.form.value;
 

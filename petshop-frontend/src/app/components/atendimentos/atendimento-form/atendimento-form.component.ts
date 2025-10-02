@@ -48,7 +48,7 @@ export class AtendimentoFormComponent implements OnInit {
       descricao: [this.data?.descricao || '', Validators.required],
       valor: [this.data?.valor || '', Validators.required],
       dataAtendimento: [this.data?.dataAtendimento || dataHoraAtual, Validators.required]
-    });
+    }, { updateOn: 'submit' });
 
     if (this.editing) {
       this.form.get('petId')?.disable();
@@ -62,7 +62,10 @@ export class AtendimentoFormComponent implements OnInit {
   }
 
   salvar() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     const atendimento = this.form.value;
 

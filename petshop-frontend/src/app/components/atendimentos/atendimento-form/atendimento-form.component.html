@@ -15,17 +15,26 @@
           </mat-option>
         }
       </mat-select>
+      <mat-error *ngIf="form.get('petId')?.hasError('required')">
+        Pet é obrigatório
+      </mat-error>
     </mat-form-field>
 
 
     <mat-form-field appearance="fill">
       <mat-label>Descrição</mat-label>
       <input matInput formControlName="descricao">
+      <mat-error *ngIf="form.get('descricao')?.hasError('required')">
+        Descrição é obrigatório
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">
       <mat-label>Valor</mat-label>
       <input matInput formControlName="valor" type="number" min="0">
+      <mat-error *ngIf="form.get('valor')?.hasError('required')">
+        Valor é obrigatório
+      </mat-error>
     </mat-form-field>
 
     <mat-form-field appearance="fill">

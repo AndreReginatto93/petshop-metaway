@@ -4,7 +4,7 @@
   <form [formGroup]="loginForm" (ngSubmit)="submit()">
     <div>
       <label>Usuário</label>
-      <input formControlName="login" />
+      <input formControlName="login"  maxlength="11"/>
       @if (loginForm.get('login')?.touched && loginForm.controls['login'].errors) {
         <p class="error-message">Usuário inválido</p>
       }

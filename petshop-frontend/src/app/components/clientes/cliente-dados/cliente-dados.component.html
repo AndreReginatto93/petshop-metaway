@@ -2,11 +2,20 @@
   <mat-form-field appearance="fill">
     <mat-label>Nome</mat-label>
     <input matInput formControlName="nome">
+    <mat-error *ngIf="form.get('nome')?.hasError('required')">
+      Nome é obrigatório
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">
     <mat-label>CPF</mat-label>
     <input matInput formControlName="cpf" maxlength="11">
+    <mat-error *ngIf="form.get('cpf')?.hasError('required')">
+      CPF é obrigatório
+    </mat-error>
+    <mat-error *ngIf="form.get('cpf')?.hasError('pattern')">
+      CPF inválido (11 digitos)
+    </mat-error>
   </mat-form-field>
 
   <mat-form-field appearance="fill">

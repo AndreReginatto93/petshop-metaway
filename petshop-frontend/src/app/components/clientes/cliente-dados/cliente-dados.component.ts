@@ -3,10 +3,11 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { ClienteEntity, ClientesService } from '../../../services/clientes/clientes.service';
 import { MatInputModule } from "@angular/material/input";
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-cliente-dados',
-  imports: [MatInputModule, ReactiveFormsModule],
+  imports: [MatInputModule, ReactiveFormsModule, CommonModule],
   templateUrl: './cliente-dados.component.html',
   styleUrl: './cliente-dados.component.scss'
 })
@@ -31,7 +32,7 @@ export class ClienteDadosComponent {
       nome: [this.cliente?.nome || '', Validators.required],
       cpf: [this.cliente?.cpf || '', [Validators.required, Validators.pattern(/^\d{11}$/)]],
       dataCadastro: [this.cliente?.dataCadastro || '', Validators.required]
-    });
+    }, { updateOn: 'submit' });
 
 
     if (this.editing) {
@@ -42,7 +43,10 @@ export class ClienteDadosComponent {
   }
 
   onSalvar() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     const dadosCliente = this.form.value;
 

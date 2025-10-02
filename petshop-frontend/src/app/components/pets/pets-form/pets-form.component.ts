@@ -60,14 +60,14 @@ export class PetsFormComponent  {
         racaId: [this.data?.pet?.raca?.id || '', Validators.required],
         nome: [this.data?.pet?.nome || '', Validators.required],
         dataNascimento: [this.data?.pet?.dataNascimento || dataHoraAtual, Validators.required]
-      });
+      }, { updateOn: 'submit' });
     }else{
       this.form = this.fb.group({
         clienteId: ['', Validators.required],
         racaId: [this.data?.pet?.raca?.id || '', Validators.required],
         nome: [this.data?.pet?.nome || '', Validators.required],
         dataNascimento: [this.data?.pet?.dataNascimento || dataHoraAtual, Validators.required]
-      });
+      }, { updateOn: 'submit' });
     }
 
     this.racasService.getItens().subscribe({
@@ -85,7 +85,10 @@ export class PetsFormComponent  {
   }
 
   salvar() {
-    if (this.form.invalid) return;
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
 
     const pet = this.form.value;
 

@@ -17,6 +17,15 @@
     <mat-form-field appearance="fill">
       <mat-label>Valor</mat-label>
       <input matInput formControlName="valor">
+      <mat-error *ngIf="form.get('valor')?.hasError('required')">
+        Valor é obrigatório
+      </mat-error>
+      <mat-error *ngIf="form.get('valor')?.hasError('email')">
+        Email inválido
+      </mat-error>
+      <mat-error *ngIf="form.get('valor')?.hasError('pattern')">
+        Telefone inválido (10 ou 11 dígitos)
+      </mat-error>
     </mat-form-field>
 
     <div mat-dialog-actions class="actions">
