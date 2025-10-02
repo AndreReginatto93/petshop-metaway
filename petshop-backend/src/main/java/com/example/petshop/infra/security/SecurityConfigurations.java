@@ -53,7 +53,7 @@ public class SecurityConfigurations {
 
                 .requestMatchers(HttpMethod.GET, "/api/v1/racas").authenticated()
 
-
+                .requestMatchers("/actuator/**").permitAll()
                 .anyRequest().hasAuthority("ROLE_ADMIN")
         )
 
