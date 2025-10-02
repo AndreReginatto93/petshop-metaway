@@ -1,0 +1,33 @@
+<div class="form-container">
+
+  <h2 mat-dialog-title>Novo Usuário</h2>
+
+  <form [formGroup]="form" (ngSubmit)="salvar()" class="form-fields">
+    <mat-form-field appearance="fill">
+      <mat-label>Nome</mat-label>
+      <input matInput formControlName="nome">
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>CPF</mat-label>
+        <input matInput formControlName="login">
+    </mat-form-field>
+
+   
+    <mat-form-field appearance="outline" class="w-100">
+        <mat-label>Perfil</mat-label>
+        <mat-select formControlName="role">
+            <mat-option value="ADMIN">Admin</mat-option>
+            <mat-option value="USER">User</mat-option>
+        </mat-select>
+    </mat-form-field>
+    
+
+    <div mat-dialog-actions class="actions">
+      <button mat-button class="no-hover" type="button" (click)="cancelar()">Cancelar</button>
+      <button mat-raised-button color="primary" type="submit">
+        Criar
+      </button>
+    </div>
+  </form>
+</div>

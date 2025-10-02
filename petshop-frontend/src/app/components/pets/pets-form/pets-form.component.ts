@@ -38,7 +38,7 @@ export class PetsFormComponent  {
     private petService: PetsService,
     private racasService: RacasService,
     private clienteService: ClientesService,
-    private dialogRef: MatDialogRef<ClientePetFormComponent>,
+    private dialogRef: MatDialogRef<PetsFormComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any, // se houver registro para edição
   ) {}
 

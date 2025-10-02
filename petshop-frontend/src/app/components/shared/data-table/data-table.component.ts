@@ -17,6 +17,7 @@ export class DataTableComponent {
   @Input() columns: TableColumn[] = [];
   @Input() data: any[] = [];
   @Input() loading: boolean = false;
+  @Input() hasEdit: boolean = true;
 
   @Output() edit = new EventEmitter<any>();
   @Output() delete = new EventEmitter<any>();

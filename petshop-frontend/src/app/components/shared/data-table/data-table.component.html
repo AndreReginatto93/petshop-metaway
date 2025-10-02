@@ -21,10 +21,12 @@
                 }
 
                 <td>
-                    <button (click)="edit.emit(row)">
-                        <p class="button-text">Editar</p>
-                    </button>
-                    <button (click)="delete.emit(row)">
+                    @if(hasEdit){
+                        <button (click)="edit.emit(row)">
+                            <p class="button-text">Editar</p>
+                        </button>
+                    }
+                        <button (click)="delete.emit(row)">
                         <p class="button-text">Excluir</p>
                     </button>
                 </td>

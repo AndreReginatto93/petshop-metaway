@@ -1,0 +1,10 @@
+<h2>Lista de Usuarios</h2>
+
+<app-data-table
+  [columns]="columns"
+  [data]="usuarios"
+  [loading]="false"
+  [hasEdit]="false"
+  (edit)="onEdit($event)"
+  (delete)="onDelete($event)">
+</app-data-table>
