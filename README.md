@@ -7,8 +7,11 @@ A simple REST API built with **Java, Spring Boot, Angular and PostgreSQL**, demo
 - [Technologies](#-technologies)
 - [API Endpoints](#auth)
     - [Auth](#auth)
-    - [Publishers](#publisher)
-    - [Books](#books)
+    - [Clients](#clients)
+    - [Contacts](#contacts)
+    - [Adresses](#adresses)
+    - [Pets](#pets)
+    - [Breed](#breed)
 
 ## Run Locally
 1. Clone the repository:
