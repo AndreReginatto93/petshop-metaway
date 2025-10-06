@@ -54,6 +54,11 @@ public class SecurityConfigurations {
                 .requestMatchers(HttpMethod.GET, "/api/v1/racas").authenticated()
 
                 .requestMatchers("/actuator/**").permitAll()
+                .requestMatchers(
+                        "/v3/api-docs/**",
+                        "/swagger-ui/**",
+                        "/swagger-ui.html"
+                ).permitAll()
                 .anyRequest().hasAuthority("ROLE_ADMIN")
         )
 
