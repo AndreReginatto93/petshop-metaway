@@ -64,7 +64,7 @@ For complete details and example requests, import the Postman collection from:
 
 The user login must be the same as CPF on the client to access "me" endpoints.
 
-The first access can be done with the default **admin:admin** user, and then create new users as needed. If this user is deleted, just restart the backend application to recreate it.
+The first access can be done with the default **admin:admin** user, and then create new users as needed. If the admin:admin is deleted, just restart the backend application to recreate it.
 
 
 
